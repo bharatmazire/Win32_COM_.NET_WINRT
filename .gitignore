@@ -658,4 +658,9 @@ ASALocalRun/
 
 .mfractor/
 
+####### LAST ADDED 
+#
+*.sln
+*.vcxproj
+*.vcxproj.*
 

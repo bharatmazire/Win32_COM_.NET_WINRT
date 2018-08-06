@@ -1,0 +1,3 @@
+#include"WindowIcon.h"
+
+MYICON ICON "github.ico"
