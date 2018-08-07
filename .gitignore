@@ -28,7 +28,7 @@
 
 # Build results
 
-[Dd]ebug/
+#[Dd]ebug/
 
 [Dd]ebugPublic/
 
@@ -663,4 +663,9 @@ ASALocalRun/
 *.sln
 *.vcxproj
 *.vcxproj.*
-
+*.obj
+*.idb
+*.pdb
+*.ilk
+*.log
+*.tlog
