@@ -39,8 +39,33 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmdLi
 
 LRESULT CALLBACK WndProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM lParam)
 {
+	static HBITMAP hbmScreen, hBitMap;
+	HDC hdc,hdc1;
+	PAINTSTRUCT ps;
+	RECT rc;
+	BITMAP bmpScreen;
+
 	switch (iMsg)
 	{
+	case WM_CREATE:
+		hBitMap = LoadBitmap(NULL,"space.bmp");
+		break;
+
+	case WM_PAINT:
+		hdc = BeginPaint(hwnd, &ps);
+		GetClientRect(hwnd, &rc);
+		
+		hdc1 = CreateCompatibleDC(hdc);
+		
+		hbmScreen = CreateCompatibleBitmap(hdc, rc.left, rc.right);
+		
+		SelectObject(hdc1, hbmScreen);
+		
+		GetObject(hdc1, sizeof(BITMAP), &bmpScreen);
+		BitBlt(hdc, 0, 0, bmpScreen.bmHeight, bmpScreen.bmWidth, hdc1, 0, 0, SRCCOPY);
+		//InvalidateRect(hwnd, NULL, FALSE);
+		
+		break;
 	case WM_DESTROY:
 		PostQuitMessage(0);
 		break;
