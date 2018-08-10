@@ -1,7 +1,9 @@
 #include<windows.h>
+#include"MyResource.h"
 
 LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
 
+HINSTANCE hInst;
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmdLine, int iCmdShow)
 {
 	WNDCLASSEX wndclass;
@@ -26,6 +28,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmdLi
 
 	hwnd = CreateWindow(szAppName, TEXT("MY WINDOW WITH BITMAP"), WS_OVERLAPPEDWINDOW, CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT, NULL, NULL, hInstance, NULL);
 
+	hInst = hInstance;
+
 	ShowWindow(hwnd, iCmdShow);
 	UpdateWindow(hwnd);
 
@@ -43,28 +47,30 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM lParam)
 	HDC hdc,hdc1;
 	PAINTSTRUCT ps;
 	RECT rc;
-	BITMAP bmpScreen;
-
+	BITMAP bmp,bmpScreen;
+	
 	switch (iMsg)
 	{
 	case WM_CREATE:
-		hBitMap = LoadBitmap(NULL,"space.bmp");
+		hBitMap = LoadBitmap(hInst, MAKEINTRESOURCE(MY_BITMAP));
 		break;
 
 	case WM_PAINT:
+		//MessageBox(hwnd, TEXT("IN PAINT"), TEXT("PAINT BOX"), MB_OK);
 		hdc = BeginPaint(hwnd, &ps);
 		GetClientRect(hwnd, &rc);
-		
+
 		hdc1 = CreateCompatibleDC(hdc);
 		
-		hbmScreen = CreateCompatibleBitmap(hdc, rc.left, rc.right);
+		hbmScreen = CreateCompatibleBitmap(hdc, GetSystemMetrics(SM_CXMENUCHECK), GetSystemMetrics(SM_CXMENUCHECK));
+		SelectObject(hdc1, hBitMap);
+		GetObject(hBitMap, sizeof(BITMAP),(LPVOID)&bmp);
+
+		BitBlt(hdc, 0, 0, bmp.bmWidth,bmp.bmHeight, hdc1, 0, 0, SRCCOPY);
 		
-		SelectObject(hdc1, hbmScreen);
-		
-		GetObject(hdc1, sizeof(BITMAP), &bmpScreen);
-		BitBlt(hdc, 0, 0, bmpScreen.bmHeight, bmpScreen.bmWidth, hdc1, 0, 0, SRCCOPY);
 		//InvalidateRect(hwnd, NULL, FALSE);
-		
+		DeleteDC(hdc1);
+		EndPaint(hwnd, &ps);
 		break;
 	case WM_DESTROY:
 		PostQuitMessage(0);
