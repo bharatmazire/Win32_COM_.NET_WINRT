@@ -52,7 +52,12 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM lParam)
 	switch (iMsg)
 	{
 	case WM_CREATE:
-		hBitMap = LoadBitmap(hInst, MAKEINTRESOURCE(MY_BITMAP));
+		//GetWindowLong(hwnd, GWL_HINSTANCE);
+		hBitMap = LoadBitmap((HINSTANCE)GetWindowLong(hwnd, GWL_HINSTANCE), MAKEINTRESOURCE(MY_BITMAP));
+		if (!hBitMap)
+		{
+			MessageBox(hwnd, TEXT("ERROR"), TEXT("ERROR"), MB_OK);
+		}
 		break;
 
 	case WM_PAINT:
@@ -66,7 +71,10 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM lParam)
 		SelectObject(hdc1, hBitMap);
 		GetObject(hBitMap, sizeof(BITMAP),(LPVOID)&bmp);
 
-		BitBlt(hdc, 0, 0, bmp.bmWidth,bmp.bmHeight, hdc1, 0, 0, SRCCOPY);
+		SetStretchBltMode(hdc, HALFTONE);
+		StretchBlt(hdc, 0, 0, rc.right, rc.bottom,  hdc1, 0, 0, bmp.bmWidth, bmp.bmHeight,  SRCCOPY);
+
+		//BitBlt(hdc, 0, 0, bmp.bmWidth,bmp.bmHeight, hdc1, 0, 0, SRCCOPY);
 		
 		//InvalidateRect(hwnd, NULL, FALSE);
 		DeleteDC(hdc1);
