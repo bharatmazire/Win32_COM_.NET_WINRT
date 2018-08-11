@@ -1,0 +1,4 @@
+#define ID_ETNAME 101
+#define ID_ETADDRESS 102
+#define ID_ETAGE 103
+#define DATAENTRY 104

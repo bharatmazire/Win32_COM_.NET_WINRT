@@ -1,5 +1,5 @@
 #include<windows.h>
-#include"MyResource.h"
+#include "Header.h"
 
 LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
 
@@ -24,10 +24,10 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmdLi
 	wndclass.style = CS_HREDRAW | CS_VREDRAW;
 
 	RegisterClassEx(&wndclass);
-	
+
 	hwnd = CreateWindow(szAppName, TEXT("MY WINDOW WITH BITMAP"), WS_OVERLAPPEDWINDOW, CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT, NULL, NULL, hInstance, NULL);
 
-	ShowWindow(hwnd, iCmdShow);
+	ShowWindow(hwnd, SW_MAXIMIZE);
 	UpdateWindow(hwnd);
 
 	while (GetMessage(&msg, NULL, 0, 0))
@@ -41,11 +41,11 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmdLi
 LRESULT CALLBACK WndProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM lParam)
 {
 	static HBITMAP hBitMap;
-	HDC hdc,hdc1;
+	HDC hdc, hdc1;
 	PAINTSTRUCT ps;
 	RECT rc;
 	BITMAP bmp;
-	
+
 	switch (iMsg)
 	{
 	case WM_CREATE:
@@ -63,15 +63,15 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM lParam)
 		GetClientRect(hwnd, &rc);
 
 		hdc1 = CreateCompatibleDC(hdc);
-		
+
 		SelectObject(hdc1, hBitMap);
-		GetObject(hBitMap, sizeof(BITMAP),(LPVOID)&bmp);
+		GetObject(hBitMap, sizeof(BITMAP), (LPVOID)&bmp);
 
 		SetStretchBltMode(hdc, HALFTONE);
-		StretchBlt(hdc, 0, 0, rc.right, rc.bottom,  hdc1, 0, 0, bmp.bmWidth, bmp.bmHeight,  SRCCOPY);
+		StretchBlt(hdc, 0, 0, rc.right, rc.bottom, hdc1, 0, 0, bmp.bmWidth, bmp.bmHeight, SRCCOPY);
+		DrawText(hdc, TEXT("Welcome!! \n Press SPACE BAR to Continue ..."), -1, &rc, DT_SINGLELINE | DT_CENTER | DT_VCENTER);
+		//TextOut(hdc, 0, 0, TEXT("WELCOME"), 7);
 
-		//BitBlt(hdc, 0, 0, bmp.bmWidth,bmp.bmHeight, hdc1, 0, 0, SRCCOPY);
-		
 		DeleteDC(hdc1);
 		EndPaint(hwnd, &ps);
 		break;
