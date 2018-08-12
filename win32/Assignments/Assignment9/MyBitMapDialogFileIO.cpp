@@ -1,9 +1,26 @@
 #include<windows.h>
 #include "Header.h"
 
+#include <io.h>  
+#include <stdio.h>  
+#include <stdlib.h>  
+#include <fcntl.h>  
+#include <sys/types.h>  
+#include <sys/stat.h>  
+#include <errno.h>  
+#include <share.h> 
+#include <tchar.h>
+#include <strsafe.h>
+
+
 LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
 BOOL CALLBACK MyDlgProc(HWND, UINT, WPARAM, LPARAM);
 
+typedef struct InputData
+{
+	CHAR name[50], address[50];
+	CHAR age[3];
+}INPUT_DATA;
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmdLine, int iCmdShow)
 {
 	WNDCLASSEX wndclass;
@@ -114,12 +131,45 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM lParam)
 
 BOOL CALLBACK MyDlgProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM lParam)
 {
+	TCHAR str[500];
+	INPUT_DATA ip;
+
+	int         fileHandle = 0;
+	DWORD    bytesWritten = 0;
+	HANDLE fhndl;
 	switch (iMsg)
 	{
+	case WM_INITDIALOG:
+		SetFocus(GetDlgItem(hwnd, ID_ETNAME));
+		break;
+
 	case WM_COMMAND:
-		switch (wParam)
+		switch (LOWORD(wParam))
 		{
 		case IDOK:
+			GetDlgItemText(hwnd, ID_ETNAME, ip.name, 50);
+			GetDlgItemText(hwnd, ID_ETADDRESS, ip.address, 50);
+			GetDlgItemText(hwnd, ID_ETAGE, ip.age, 3);
+			//GetDlgItemInt(hwnd, ID_ETAGE, IpData->age, NULL, TRUE);
+			wsprintf(str, TEXT(" Entered Name : %s \n Entered Address : %s \n Entered Age : %s"), ip.name,ip.address,ip.age);
+			MessageBox(hwnd, str, TEXT("TITLE"), MB_OK);
+
+
+
+			//_sopen_s(&fileHandle, "write.txt", _O_RDWR | _O_CREAT, _SH_DENYNO, _S_IREAD | _S_IWRITE);
+			
+			fhndl = CreateFile(TEXT("Write.txt"),GENERIC_WRITE,0,NULL,CREATE_NEW,FILE_ATTRIBUTE_NORMAL,NULL);
+
+			WriteFile(fhndl, str, sizeof(str),&bytesWritten,NULL);
+
+			//bytesWritten = _write(fileHandle, str, sizeof(str));
+			
+			_close(fileHandle);
+
+
+
+
+
 			EndDialog(hwnd, wParam);
 			return TRUE;
 		case IDCANCEL:
