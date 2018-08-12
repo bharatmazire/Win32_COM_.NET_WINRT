@@ -2,6 +2,7 @@
 #include "Header.h"
 
 LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
+BOOL CALLBACK MyDlgProc(HWND, UINT, WPARAM, LPARAM);
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmdLine, int iCmdShow)
 {
@@ -40,6 +41,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmdLi
 
 LRESULT CALLBACK WndProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM lParam)
 {
+	static int siInitialSpace,siInitialMessage = 0;
 	static HBITMAP hBitMap;
 	HDC hdc, hdc1;
 	PAINTSTRUCT ps;
@@ -55,6 +57,7 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM lParam)
 		{
 			MessageBox(hwnd, TEXT("ERROR Loading Bitmap"), TEXT("ERROR MSG"), MB_OK);
 		}
+		
 		break;
 
 	case WM_PAINT:
@@ -66,19 +69,63 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM lParam)
 
 		SelectObject(hdc1, hBitMap);
 		GetObject(hBitMap, sizeof(BITMAP), (LPVOID)&bmp);
-
+		
 		SetStretchBltMode(hdc, HALFTONE);
 		StretchBlt(hdc, 0, 0, rc.right, rc.bottom, hdc1, 0, 0, bmp.bmWidth, bmp.bmHeight, SRCCOPY);
-		DrawText(hdc, TEXT("Welcome!! \n Press SPACE BAR to Continue ..."), -1, &rc, DT_SINGLELINE | DT_CENTER | DT_VCENTER);
+		if(siInitialMessage == 0)
+		{
+			siInitialMessage = 1;
+			DrawText(hdc, TEXT("Welcome!! \n Press SPACE BAR to Continue ..."), -1, &rc, DT_SINGLELINE | DT_CENTER | DT_VCENTER);
+		}
+		
 		//TextOut(hdc, 0, 0, TEXT("WELCOME"), 7);
 
 		DeleteDC(hdc1);
 		EndPaint(hwnd, &ps);
 		break;
 
+	case WM_KEYDOWN:
+		switch (wParam)
+		{
+		case VK_SPACE:
+			if (siInitialSpace == 0)
+			{
+				siInitialSpace = 1;
+				MessageBox(hwnd, TEXT("SPACE PRESSED !!"), TEXT("MESSAGE"), MB_OK);
+				if (DialogBox((HINSTANCE)GetWindowLong(hwnd, GWL_HINSTANCE), MAKEINTRESOURCE(DATAENTRY), hwnd, (DLGPROC)MyDlgProc) == IDOK)
+				{
+					MessageBox(hwnd, TEXT("MSG"), TEXT("SUCCESS"), MB_OK);
+				}
+				else
+				{
+					MessageBox(hwnd, TEXT("MSG"), TEXT("FAIL"), MB_OK);
+				}
+				InvalidateRect(hwnd, FALSE, NULL);
+			}
+			break;
+		}
+		break;
 	case WM_DESTROY:
 		PostQuitMessage(0);
 		break;
 	}
 	return(DefWindowProc(hwnd, iMsg, wParam, lParam));
+}
+
+BOOL CALLBACK MyDlgProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM lParam)
+{
+	switch (iMsg)
+	{
+	case WM_COMMAND:
+		switch (wParam)
+		{
+		case IDOK:
+			EndDialog(hwnd, wParam);
+			return TRUE;
+		case IDCANCEL:
+			EndDialog(hwnd, wParam);
+			return TRUE;
+		}
+	}
+	return FALSE;
 }

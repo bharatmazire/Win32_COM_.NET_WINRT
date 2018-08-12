@@ -1,1 +1,5 @@
 #define MY_BITMAP 101
+#define ID_ETNAME 102
+#define ID_ETADDRESS 103
+#define ID_ETAGE 104
+#define DATAENTRY 105
