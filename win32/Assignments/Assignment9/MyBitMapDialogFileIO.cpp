@@ -1,6 +1,5 @@
 #include<windows.h>
 #include "Header.h"
-
 #include <io.h>  
 #include <stdio.h>  
 #include <stdlib.h>  
@@ -21,6 +20,7 @@ typedef struct InputData
 	CHAR name[50], address[50];
 	CHAR age[3];
 }INPUT_DATA;
+
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmdLine, int iCmdShow)
 {
 	WNDCLASSEX wndclass;
@@ -81,7 +81,7 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM lParam)
 		//MessageBox(hwnd, TEXT("IN PAINT"), TEXT("PAINT BOX"), MB_OK);
 		hdc = BeginPaint(hwnd, &ps);
 		GetClientRect(hwnd, &rc);
-
+		HFONT hFont;
 		hdc1 = CreateCompatibleDC(hdc);
 
 		SelectObject(hdc1, hBitMap);
@@ -90,9 +90,15 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM lParam)
 		SetStretchBltMode(hdc, HALFTONE);
 		StretchBlt(hdc, 0, 0, rc.right, rc.bottom, hdc1, 0, 0, bmp.bmWidth, bmp.bmHeight, SRCCOPY);
 		if(siInitialMessage == 0)
-		{
-			siInitialMessage = 1;
-			DrawText(hdc, TEXT("Welcome!! \n Press SPACE BAR to Continue ..."), -1, &rc, DT_SINGLELINE | DT_CENTER | DT_VCENTER);
+		{	
+			hFont = CreateFont(40, 0, 0, 0, FW_THIN, TRUE, FALSE, FALSE, DEFAULT_CHARSET, OUT_OUTLINE_PRECIS,
+				CLIP_DEFAULT_PRECIS, CLEARTYPE_QUALITY, VARIABLE_PITCH | FF_ROMAN, TEXT("Impact"));
+
+			SelectObject(hdc, hFont);
+			
+			SetBkMode(hdc, TRANSPARENT);
+			SetTextColor(hdc, RGB(255, 255, 255));
+			DrawText(hdc, TEXT("Welcome !! \n Press Space bar to continue ..."), -1, &rc, DT_SINGLELINE | DT_CENTER | DT_VCENTER);
 		}
 		
 		//TextOut(hdc, 0, 0, TEXT("WELCOME"), 7);
@@ -107,6 +113,7 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM lParam)
 		case VK_SPACE:
 			if (siInitialSpace == 0)
 			{
+				siInitialMessage = 1;
 				siInitialSpace = 1;
 				MessageBox(hwnd, TEXT("SPACE PRESSED !!"), TEXT("MESSAGE"), MB_OK);
 				if (DialogBox((HINSTANCE)GetWindowLong(hwnd, GWL_HINSTANCE), MAKEINTRESOURCE(DATAENTRY), hwnd, (DLGPROC)MyDlgProc) == IDOK)
@@ -134,9 +141,12 @@ BOOL CALLBACK MyDlgProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM lParam)
 	TCHAR str[500];
 	INPUT_DATA ip;
 
-	int         fileHandle = 0;
-	DWORD    bytesWritten = 0;
+	int fileHandle = 0;
+	//DWORD bytesWritten = 0;
+	unsigned    bytesWritten = 0;
 	HANDLE fhndl;
+
+
 	switch (iMsg)
 	{
 	case WM_INITDIALOG:
@@ -153,23 +163,15 @@ BOOL CALLBACK MyDlgProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM lParam)
 			//GetDlgItemInt(hwnd, ID_ETAGE, IpData->age, NULL, TRUE);
 			wsprintf(str, TEXT(" Entered Name : %s \n Entered Address : %s \n Entered Age : %s"), ip.name,ip.address,ip.age);
 			MessageBox(hwnd, str, TEXT("TITLE"), MB_OK);
-
-
-
-			//_sopen_s(&fileHandle, "write.txt", _O_RDWR | _O_CREAT, _SH_DENYNO, _S_IREAD | _S_IWRITE);
 			
-			fhndl = CreateFile(TEXT("Write.txt"),GENERIC_WRITE,0,NULL,CREATE_NEW,FILE_ATTRIBUTE_NORMAL,NULL);
+			//fhndl = CreateFile(TEXT("Write.txt"),GENERIC_WRITE,0,NULL,CREATE_NEW,FILE_ATTRIBUTE_NORMAL,NULL);
+			//WriteFile(fhndl, str, sizeof(str),&bytesWritten,NULL);
+			//CloseHandle(fhndl);
 
-			WriteFile(fhndl, str, sizeof(str),&bytesWritten,NULL);
-
-			//bytesWritten = _write(fileHandle, str, sizeof(str));
-			
+			_sopen_s(&fileHandle, "write.txt", _O_RDWR | _O_CREAT, _SH_DENYNO, _S_IREAD | _S_IWRITE);
+			bytesWritten = _write(fileHandle, str, sizeof(str));
 			_close(fileHandle);
-
-
-
-
-
+			
 			EndDialog(hwnd, wParam);
 			return TRUE;
 		case IDCANCEL:
