@@ -17,15 +17,14 @@ BOOL    CALLBACK MyDlgProc(HWND, UINT, WPARAM, LPARAM);
 
 typedef struct InputData
 {
-	CHAR name[50], address[50];
-	CHAR age[3];
+	CHAR name[50], address[50],age[3];
 	INT status;
 }INPUT_DATA;
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmdLine, int iCmdShow)
 {
 	WNDCLASSEX wndclass;
-	TCHAR szAppName[] = TEXT("MY WINDOW BITMAP");
+	TCHAR szAppName[] = TEXT("MY Data Entry");
 	HWND hwnd;
 	MSG msg;
 
@@ -48,7 +47,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmdLi
 		return 0;
 	}
 
-	hwnd = CreateWindow(szAppName, TEXT("MY WINDOW WITH BITMAP"), WS_OVERLAPPEDWINDOW, CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT, NULL, NULL, hInstance, NULL);
+	hwnd = CreateWindow(szAppName, TEXT("MY Data Entry"), WS_OVERLAPPEDWINDOW, CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT, NULL, NULL, hInstance, NULL);
 
 	ShowWindow(hwnd, SW_MAXIMIZE);
 	UpdateWindow(hwnd);
@@ -146,14 +145,12 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM lParam)
 BOOL CALLBACK MyDlgProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM lParam)
 {
 	TCHAR str[500];
-	INPUT_DATA ip;
-
 	TCHAR status[10];
-	int fileHandle = 0;
-	//DWORD bytesWritten = 0;
-	unsigned    bytesWritten = 0;
-	//HANDLE fhndl;
+	int err;
 
+	INPUT_DATA ip;
+	FILE *stream;
+		
 
 	switch (iMsg)
 	{
@@ -173,18 +170,17 @@ BOOL CALLBACK MyDlgProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM lParam)
 				wsprintf(status, TEXT("MARRIED"));
 			else
 				wsprintf(status, TEXT("UNMARRIED"));
-			//GetDlgItemInt(hwnd, ID_ETAGE, IpData->age, NULL, TRUE);
-			wsprintf(str, TEXT(" Entered Name : %s \n Entered Address : %s \n Entered Age : %s \n Entered Status : %s"), ip.name,ip.address,ip.age, status);
+
+			wsprintf(str, TEXT(" Entered Name : %s \n Entered Address : %s \n Entered Age : %s \n Entered Status : %s\n"), ip.name,ip.address,ip.age, status);
 			MessageBox(hwnd, str, TEXT("TITLE"), MB_OK);
 			
-			//fhndl = CreateFile(TEXT("Write.txt"),GENERIC_WRITE,0,NULL,CREATE_NEW,FILE_ATTRIBUTE_NORMAL,NULL);
-			//WriteFile(fhndl, str, sizeof(str),&bytesWritten,NULL);
-			//CloseHandle(fhndl);
+			err = fopen_s(&stream,"write.txt","a+");
+			if(err != 0)
+				MessageBox(hwnd, TEXT("UNABLE TO OPEN FILE"), TEXT("ERROR!!"), MB_OK);
+			else
+				fprintf_s(stream, "%s", str);
 
-			_sopen_s(&fileHandle, "write.txt", _O_RDWR | _O_CREAT, _SH_DENYNO, _S_IREAD | _S_IWRITE);
-			bytesWritten = _write(fileHandle, str, sizeof(str));
-			_close(fileHandle);
-			
+			fclose(stream);
 			EndDialog(hwnd, wParam);
 			return TRUE;
 		
