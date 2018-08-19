@@ -19,6 +19,7 @@ typedef struct InputData
 {
 	CHAR name[50], address[50];
 	CHAR age[3];
+	INT status;
 }INPUT_DATA;
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmdLine, int iCmdShow)
@@ -147,6 +148,7 @@ BOOL CALLBACK MyDlgProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM lParam)
 	TCHAR str[500];
 	INPUT_DATA ip;
 
+	TCHAR status[10];
 	int fileHandle = 0;
 	//DWORD bytesWritten = 0;
 	unsigned    bytesWritten = 0;
@@ -166,8 +168,13 @@ BOOL CALLBACK MyDlgProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM lParam)
 			GetDlgItemText(hwnd, ID_ETNAME, ip.name, 50);
 			GetDlgItemText(hwnd, ID_ETADDRESS, ip.address, 50);
 			GetDlgItemText(hwnd, ID_ETAGE, ip.age, 3);
+			ip.status = SendDlgItemMessage(hwnd, ID_RBMARRIED, BM_GETCHECK, 0, 0);
+			if (ip.status)
+				wsprintf(status, TEXT("MARRIED"));
+			else
+				wsprintf(status, TEXT("UNMARRIED"));
 			//GetDlgItemInt(hwnd, ID_ETAGE, IpData->age, NULL, TRUE);
-			wsprintf(str, TEXT(" Entered Name : %s \n Entered Address : %s \n Entered Age : %s"), ip.name,ip.address,ip.age);
+			wsprintf(str, TEXT(" Entered Name : %s \n Entered Address : %s \n Entered Age : %s \n Entered Status : %s"), ip.name,ip.address,ip.age, status);
 			MessageBox(hwnd, str, TEXT("TITLE"), MB_OK);
 			
 			//fhndl = CreateFile(TEXT("Write.txt"),GENERIC_WRITE,0,NULL,CREATE_NEW,FILE_ATTRIBUTE_NORMAL,NULL);
