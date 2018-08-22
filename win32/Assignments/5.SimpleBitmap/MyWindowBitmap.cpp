@@ -3,6 +3,7 @@
 
 LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
 
+
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmdLine, int iCmdShow)
 {
 	WNDCLASSEX wndclass;
@@ -69,6 +70,8 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM lParam)
 
 		SetStretchBltMode(hdc, HALFTONE);
 		StretchBlt(hdc, 0, 0, rc.right, rc.bottom,  hdc1, 0, 0, bmp.bmWidth, bmp.bmHeight,  SRCCOPY);
+
+			
 
 		//BitBlt(hdc, 0, 0, bmp.bmWidth,bmp.bmHeight, hdc1, 0, 0, SRCCOPY);
 		
