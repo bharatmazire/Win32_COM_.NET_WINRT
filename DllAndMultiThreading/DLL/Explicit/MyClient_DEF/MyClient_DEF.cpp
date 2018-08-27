@@ -1,5 +1,5 @@
 #include<windows.h>
-#include"MyDll_DEF.h"
+//#include"MyDll_DEF.h"
 
 LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
 
@@ -40,7 +40,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmdLi
 
 LRESULT CALLBACK WndProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM lParam)
 {
-	HMODULE hLib = NULL;
+	static HMODULE hLib = NULL;
 	typedef int(* pfnMakeSquare) (int);
 	pfnMakeSquare pfn = NULL;
 
@@ -56,26 +56,25 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM lParam)
 			MessageBox(hwnd, TEXT("DLL LOADING FAILS !!"), TEXT("ERROR"), MB_OK);
 			DestroyWindow(hwnd);
 		}
-		else
-		{
-			MessageBox(hwnd, TEXT("DLL LOADING Successfull !!"), TEXT("NO ERROR"), MB_OK);
-		}
+		//else
+		//{
+		//	MessageBox(hwnd, TEXT("DLL LOADING Successfull !!"), TEXT("NO ERROR"), MB_OK);
+		//}
 
 		break;
 
 	case WM_LBUTTONDOWN:
-		MessageBox(hwnd, TEXT("LEft clicked !!"), TEXT("MESSAGE"), MB_OK);
 		iNum = iNum + 1;
 		pfn = (pfnMakeSquare)GetProcAddress(hLib, "MySquareDef");
-		if (pfn == NULL)
-		{
-			MessageBox(hwnd, TEXT("Function LOADING FAILS !!"), TEXT("ERROR"), MB_OK);
-			DestroyWindow(hwnd);
-		}
-		else
-		{
-			MessageBox(hwnd, TEXT("Function LOADING Successfull !!"), TEXT("NO ERROR"), MB_OK);
-		}
+		//if (pfn == NULL)
+		//{
+		//	MessageBox(hwnd, TEXT("Function LOADING FAILS !!"), TEXT("ERROR"), MB_OK);
+		//	DestroyWindow(hwnd);
+		//}
+		//else
+		//{
+		//	MessageBox(hwnd, TEXT("Function LOADING Successfull !!"), TEXT("NO ERROR"), MB_OK);
+		//}
 		wsprintf(str, TEXT("SQUARE OF %d is : %d"), iNum, pfn(iNum));
 		MessageBox(hwnd, str, TEXT("MySQuareOutput"), MB_OK | MB_ICONINFORMATION);
 		break;

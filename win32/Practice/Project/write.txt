@@ -1,0 +1,8 @@
+ Entered Name : a 
+ Entered Address : a 
+ Entered Age : 1 
+ Entered Status : MARRIED
+ Entered Name : b 
+ Entered Address : b 
+ Entered Age : 2 
+ Entered Status : UNMARRIED
