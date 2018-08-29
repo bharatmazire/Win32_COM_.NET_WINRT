@@ -6,3 +6,28 @@
  Entered Age : 23 
  Entered Status : UNMARRIED 
   Gender : MALE 
+ Entered Name :  
+ Entered Address :  
+ Entered Age :  
+ Entered Status : UNMARRIED 
+  Gender : FEMALE 
+ Entered Name :  
+ Entered Address :  
+ Entered Age :  
+ Entered Status : UNMARRIED 
+  Gender : FEMALE 
+ Entered Name :  
+ Entered Address :  
+ Entered Age :  
+ Entered Status : UNMARRIED 
+  Gender : FEMALE 
+ Entered Name :  
+ Entered Address :  
+ Entered Age :  
+ Entered Status : UNMARRIED 
+  Gender : MALE 
+ Entered Name :  
+ Entered Address :  
+ Entered Age :  
+ Entered Status : UNMARRIED 
+  Gender : FEMALE 

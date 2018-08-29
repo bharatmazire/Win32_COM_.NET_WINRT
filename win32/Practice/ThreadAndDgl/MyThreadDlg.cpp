@@ -307,7 +307,6 @@ BOOL CALLBACK MyDlgProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM lParam)
 
 BOOL CALLBACK MyDlgProc2(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM lParam)
 {
-	INPUT_DATA ip;
 	CHOICE_CH ch;
 
 	switch (iMsg)
