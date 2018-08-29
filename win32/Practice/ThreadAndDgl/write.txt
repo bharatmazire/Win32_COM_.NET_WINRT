@@ -1,0 +1,8 @@
+ Entered Name : bharat 
+ Entered Address : mazire 
+ Entered Age : 23 
+ Entered Status : UNMARRIED Entered Name : bharat 
+ Entered Address : mazire 
+ Entered Age : 23 
+ Entered Status : UNMARRIED 
+  Gender : MALE 

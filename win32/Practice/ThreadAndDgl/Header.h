@@ -6,3 +6,7 @@
 #define ID_RBUNMARRIED 107
 #define ID_GROUPBOX1 108
 #define ID_GROUPBOX2 109
+#define DATAENTRY2 110
+#define CHOICE 111
+#define ID_RBFEMALE 112
+#define ID_RBMALE 113
