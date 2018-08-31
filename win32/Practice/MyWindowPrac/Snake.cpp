@@ -89,7 +89,7 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM lParam)
 		case 'W':
 			iBottomMove = iBottomMove - 20;
 			x--;
-			y--;
+			//y--;
 			break;
 		case 'D':
 			iRightMove = iRightMove + 20;
@@ -98,7 +98,7 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM lParam)
 		case 'S':
 			iBottomMove = iBottomMove + 20;
 			x++;
-			y++;
+			//y++;
 			break;
 		case VK_RIGHT:
 			iRightMove = iRightMove + 20;
@@ -111,11 +111,11 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM lParam)
 		case VK_UP:
 			iBottomMove = iBottomMove - 20;
 			x--;
-			y--;
+			//y--;
 			break;
 		case VK_DOWN:
 			iBottomMove = iBottomMove + 20;
-			y++;
+			//y++;
 			x++;
 			break;
 		case VK_ESCAPE:
