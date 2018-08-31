@@ -89,7 +89,7 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM lParam)
 		hBitMap2 = LoadBitmap((HINSTANCE)GetWindowLong(hwnd, GWL_HINSTANCE), MAKEINTRESOURCE(MY_BITMAP2));
 		if (!hBitMap2)
 		{
-			MessageBox(hwnd, TEXT("ERROR Loading Bitmap"), TEXT("ERROR MSG"), MB_OK | MB_ICONERROR);
+			MessageBox(hwnd, TEXT("ERROR Loading Bitmap 2"), TEXT("ERROR MSG"), MB_OK | MB_ICONERROR);
 			DestroyWindow(hwnd);
 		}
 		break;

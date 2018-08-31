@@ -8,3 +8,4 @@
 #define ID_GROUPBOX1 108
 #define ID_GROUPBOX2 109
 #define MY_BITMAP2 110
+#define MY_BITMAP3 111
