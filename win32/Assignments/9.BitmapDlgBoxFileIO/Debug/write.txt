@@ -1,0 +1,4 @@
+ Entered Name :  
+ Entered Address :  
+ Entered Age :  
+ Entered Status : UNMARRIED
