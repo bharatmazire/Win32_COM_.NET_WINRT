@@ -1,4 +1,6 @@
 #include<windows.h>
+#include<stdlib.h>
+#include<stdio.h>
 
 LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
 DWORD WINAPI MyThreadProcOne(LPVOID);
@@ -154,15 +156,7 @@ DWORD WINAPI MyThreadProcOne(LPVOID param)
 	int a = 1;
 	while (a)
 	{
-		if (iRight > RightMove && iBottom == (rc.bottom - 20))
-		{
-			MessageBox(hwnd, TEXT("LOOSE"), TEXT("LOOSE"), MB_OK);
-			a = 0;
-			wsprintf(str, TEXT("YOUR SCORE : %d"), Score);
-			MessageBox(hwnd, str, TEXT("SCORE "), MB_OK);
-			//DestroyWindow(hwnd);
-		}
-		else if (iLeft < LeftMove && iBottom == (rc.bottom) - 20)
+		if ((iRight > RightMove && iBottom == (rc.bottom - 20)) || (iLeft < LeftMove && iBottom == (rc.bottom) - 20))
 		{
 			MessageBox(hwnd, TEXT("LOOSE"), TEXT("LOOSE"), MB_OK);
 			a = 0;
@@ -273,8 +267,7 @@ DWORD WINAPI MyThreadProcOne(LPVOID param)
 				}
 
 			}
-
-			Sleep(5);
+			Sleep(((rand()%10)));
 			InvalidateRect(hwnd, NULL, TRUE);
 		}
 	}
