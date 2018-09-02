@@ -1,10 +1,11 @@
 #include<windows.h>
 #include<stdlib.h>
 #include<stdio.h>
+#include "MyHeader.h"
 
 LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
 DWORD WINAPI MyThreadProcOne(LPVOID);
-
+BOOL CALLBACK MyDlgProc(HWND, UINT, WPARAM, LPARAM);
 
 int iLeft = 0;
 int iTop = 0;
@@ -21,6 +22,7 @@ int Brclr = 0;
 int LeftMove = 0;
 int RightMove = 120;
 
+int Speed = 0;
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmdLine, int iCmdShow)
 {
@@ -68,7 +70,7 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM lParam)
 	static RECT rc;
 	GetClientRect(hwnd, &rc);
 	HBRUSH hBrush, hBrushBar;
-
+	static int iChoice;
 
 	static HANDLE hThread1 = NULL;
 	
@@ -76,12 +78,35 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM lParam)
 	{
 
 	case WM_CREATE:
-		hThread1 = CreateThread(NULL, 0, (LPTHREAD_START_ROUTINE)MyThreadProcOne, (LPVOID)hwnd, 0, NULL);
-		if (hThread1 == NULL)
+		
+		iChoice = MessageBox(hwnd, TEXT("Rules to play game : \n '>>... DO NOT RESIZE WINDOW ...<< '\n\n 1. Use Right and Left Arrow Keys to move Sticker \n 2. Close Window when you Loose \n\n\n Click 'OK' to start "), TEXT("RULES !!!"), MB_ICONINFORMATION | MB_OKCANCEL);
+		if (iChoice == 1)
 		{
-			MessageBox(hwnd, TEXT("Thread 1 creation failed "), TEXT("ERROR MSG"), MB_OK);
+			if (DialogBox((HINSTANCE)GetWindowLong(hwnd, GWL_HINSTANCE), MAKEINTRESOURCE(SPEED), hwnd, (DLGPROC)MyDlgProc) == IDOK)
+			{
+			//		MessageBox(hwnd, TEXT("MSG"), TEXT("SUCCESS"), MB_OK);
+			}
+			else
+			{
+				MessageBox(hwnd, TEXT("Dialog Box call FAIL"), TEXT("ERROR MESSAGE"), MB_OK | MB_ICONERROR);
+				DestroyWindow(hwnd);
+			}
+
+			Sleep(200);
+
+			hThread1 = CreateThread(NULL, 0, (LPTHREAD_START_ROUTINE)MyThreadProcOne, (LPVOID)hwnd, 0, NULL);
+			if (hThread1 == NULL)
+			{
+				MessageBox(hwnd, TEXT("Thread 1 creation failed "), TEXT("ERROR MSG"), MB_OK);
+				DestroyWindow(hwnd);
+			}
+		}
+		else
+		{
+			MessageBox(hwnd, TEXT("THANK YOU !!"), TEXT("QUIT GAME"), MB_OK);
 			DestroyWindow(hwnd);
 		}
+		
 		break;
 
 	case WM_KEYDOWN:
@@ -150,15 +175,22 @@ DWORD WINAPI MyThreadProcOne(LPVOID param)
 	int Score = 0;
 	TCHAR str[30];
 
+	int sp;
+	if (Speed == 0)
+		sp = 5;
+	else if (Speed == 1)
+		sp = 10;
+
+	int a = 1;
+
 	HWND hwnd = (HWND)param;
 	RECT rc;
 	GetClientRect(hwnd, &rc);
-	int a = 1;
 	while (a)
 	{
-		if ((iRight > RightMove && iBottom == (rc.bottom - 20)) || (iLeft < LeftMove && iBottom == (rc.bottom) - 20))
+		if ((iRight > (RightMove+20) && iBottom == (rc.bottom - 20)) || (iLeft < (LeftMove-20) && iBottom == (rc.bottom) - 20))
 		{
-			MessageBox(hwnd, TEXT("LOOSE"), TEXT("LOOSE"), MB_OK);
+			MessageBox(hwnd, TEXT("YOU LOOSE"), TEXT("GAME STATUS"), MB_OK);
 			a = 0;
 			wsprintf(str, TEXT("YOUR SCORE : %d"), Score);
 			MessageBox(hwnd, str, TEXT("SCORE "), MB_OK);
@@ -265,12 +297,34 @@ DWORD WINAPI MyThreadProcOne(LPVOID param)
 					Brclr = 2;
 					
 				}
-
 			}
-			Sleep(((rand()%10)));
+			Sleep(sp);
 			InvalidateRect(hwnd, NULL, TRUE);
 		}
 	}
-
 	return 0;
+}
+
+BOOL CALLBACK MyDlgProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM lParam)
+{
+	//TCHAR str[30];
+	
+	switch (iMsg)
+	{
+	case WM_COMMAND:
+		switch (LOWORD(wParam))
+		{
+		case IDOK:
+			Speed = SendDlgItemMessage(hwnd, ID_RBEASY, BM_GETCHECK, 0, 0);
+			//wsprintf(str, "%d", Speed);
+			//MessageBox(hwnd, str, TEXT("see"), MB_OK);
+			EndDialog(hwnd, wParam);
+			return TRUE;
+
+		case IDCANCEL:
+			EndDialog(hwnd, wParam);
+			return TRUE;
+		}
+	}
+	return FALSE;
 }
