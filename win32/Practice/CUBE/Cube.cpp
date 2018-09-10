@@ -1,6 +1,5 @@
 #include<windows.h>
 
-
 struct BTL
 {
 	int X;
@@ -24,7 +23,6 @@ struct BBL
 	int X;
 	int Y;
 }H;
-
 
 struct FTL
 {
@@ -61,6 +59,7 @@ int xCount = 0;
 int yCount = 0;
 
 LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
+VOID DrawCube(HDC, BTL, BTR, BBR, BBL, FTL, FTR, FBR, FBL);
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmdLine, int iCmdShow)
 {
@@ -173,7 +172,8 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM lParam)
 		D.Y = H.Y + y;
 
 			hPen = ExtCreatePen(PS_COSMETIC | PS_SOLID, 1, &lb, 0, NULL);
-			
+			DrawCube(hdc, E, F, G, H, A, B, C, D);
+/*
 			// Back surface
 			// ... start ...
 			MoveToEx(hdc, E.X, E.Y, NULL);
@@ -221,7 +221,7 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM lParam)
 			LineTo(hdc, D.X, D.Y);
 
 			// .. end ...
-
+*/
 		break;
 
 	case WM_KEYDOWN:
@@ -239,7 +239,7 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM lParam)
 		case VK_RIGHT:
 			x = x + 10;
 			break;
-/*
+ /*
 		case VK_UP:
 			if (yCount < 2)
 			{
@@ -287,7 +287,7 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM lParam)
 */
 		}
 		InvalidateRect(hwnd, NULL, TRUE);
-		break;
+		break; 
 	
 	case WM_DESTROY:
 		PostQuitMessage(0);
@@ -295,4 +295,53 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM lParam)
 
 	}
 	return (DefWindowProc(hwnd, iMsg, wParam, lParam));
+}
+
+VOID DrawCube(HDC hdc, BTL E, BTR F, BBR G, BBL H, FTL A, FTR B, FBR C, FBL D)
+{
+	MoveToEx(hdc, E.X, E.Y, NULL);
+	LineTo(hdc, H.X, H.Y);
+
+	MoveToEx(hdc, E.X, E.Y, NULL);
+	LineTo(hdc, F.X, F.Y);
+
+	MoveToEx(hdc, G.X, G.Y, NULL);
+	LineTo(hdc, H.X, H.Y);
+
+	MoveToEx(hdc, G.X, G.Y, NULL);
+	LineTo(hdc, F.X, F.Y);
+	// ... End ...
+
+	// Front face 
+	// ... Start ...
+	MoveToEx(hdc, A.X, A.Y, NULL);
+	LineTo(hdc, D.X, D.Y);
+
+	MoveToEx(hdc, A.X, A.Y, NULL);
+	LineTo(hdc, B.X, B.Y);
+
+	MoveToEx(hdc, C.X, C.Y, NULL);
+	LineTo(hdc, D.X, D.Y);
+
+	MoveToEx(hdc, C.X, C.Y, NULL);
+	LineTo(hdc, B.X, B.Y);
+
+
+	// ... end ...
+
+	// Surface Joining line
+	// ... start ...
+	MoveToEx(hdc, E.X, E.Y, NULL);
+	LineTo(hdc, A.X, A.Y);
+
+	MoveToEx(hdc, F.X, F.Y, NULL);
+	LineTo(hdc, B.X, B.Y);
+
+	MoveToEx(hdc, G.X, G.Y, NULL);
+	LineTo(hdc, C.X, C.Y);
+
+	MoveToEx(hdc, H.X, H.Y, NULL);
+	LineTo(hdc, D.X, D.Y);
+
+	// .. end ...
 }
