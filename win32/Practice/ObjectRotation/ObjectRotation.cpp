@@ -2,12 +2,12 @@
 
 struct XYPOINT
 {
-	double X;
-	double Y;
+	int X;
+	int Y;
 }E,F,G,H,A,B,C,D;
 
 // Declaring points of cube
-double PointEX[8][3] = { {0,100,0},{100,100,0},{100,0,0}, {0,0,0},{0,100,0},{100,100,0},{100,0,0}, {0,0,0} };
+double PointEX[8][3] = { {0,100,0},{100,100,0},{100,0,0}, {0,0,0},{0,100,100},{100,100,100},{100,0,100}, {0,0,100} };
 /*
 int PointE[3] = { 0,100,0 };
 int PointF[3] = { 100,100,0 };
@@ -23,10 +23,17 @@ int iInitialX;
 int iInitialY;
 int iInitialZ;
 
+int t = 100; // for time 
+
+double y[3][3];
+
 LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
 VOID DrawCube(HDC, XYPOINT, XYPOINT, XYPOINT, XYPOINT, XYPOINT, XYPOINT, XYPOINT, XYPOINT);
-//VOID RotateAlongX(INT);
-VOID RotateAlongY(INT,HWND);
+VOID RotateAlong(INT,INT,HWND);
+DWORD WINAPI MyThreadProcOne(LPVOID);
+DWORD WINAPI MyThreadProcTwo(LPVOID);
+DWORD WINAPI MyThreadProcThree(LPVOID);
+//VOID RotateAlongY(INT,HWND);
 
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmdLine, int iCmdShow)
@@ -39,7 +46,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmdLi
 	wndclass.cbClsExtra = 0;
 	wndclass.cbSize = sizeof(WNDCLASSEX);
 	wndclass.cbWndExtra = 0;
-	wndclass.hbrBackground = (HBRUSH)GetStockObject(GRAY_BRUSH);
+	wndclass.hbrBackground = (HBRUSH)GetStockObject(BLACK_BRUSH);
 	wndclass.hCursor = LoadCursor(NULL, IDC_ARROW);
 	wndclass.hIcon = LoadIcon(NULL, IDI_APPLICATION);
 	wndclass.hIconSm = LoadIcon(NULL, IDI_APPLICATION);
@@ -73,47 +80,46 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM lParam)
 	HDC hdc;
 	PAINTSTRUCT ps;
 	RECT rc;
-	HGDIOBJ hPen = NULL;
-	LOGBRUSH lb;
+	HPEN hPen;
+
+	static HANDLE hThread1 = NULL;
+	static HANDLE hThread2 = NULL;
+	static HANDLE hThread3 = NULL;
 
 	switch (iMsg)
 	{
 	case WM_PAINT:
 		hdc = BeginPaint(hwnd, &ps);
 		GetClientRect(hwnd, &rc);
-
-		lb.lbStyle = BS_SOLID;
-		lb.lbColor = RGB(0, 0, 0);
-		lb.lbHatch = 0;
 		
 		iInitialX = rc.right / 2;
 		iInitialY = rc.bottom / 2;
 		iInitialZ = rc.right / 2;
 
 
-		E.X = iInitialX + PointEX[0][0];
-		E.Y = iInitialY + PointEX[0][1];
-
-		F.X = iInitialX + PointEX[1][0];
-		F.Y = iInitialY + PointEX[1][1];
-
-		G.X = iInitialX + PointEX[2][0];
-		G.Y = iInitialY + PointEX[2][1];
-
-		H.X = iInitialX + PointEX[3][0];
-		H.Y = iInitialY + PointEX[3][1];
-
-		A.X = iInitialX + PointEX[4][0];
-		A.Y = iInitialY + PointEX[4][1];
-
-		B.X = iInitialX + PointEX[5][0];
-		B.Y = iInitialY + PointEX[5][1];
-
-		C.X = iInitialX + PointEX[6][0];
-		C.Y = iInitialY + PointEX[6][1];
-
-		D.X = iInitialX + PointEX[7][0];
-		D.Y = iInitialY + PointEX[7][1];
+		E.X = iInitialX + (int) PointEX[0][0];
+		E.Y = iInitialY + (int) PointEX[0][1];
+						  
+		F.X = iInitialX + (int) PointEX[1][0];
+		F.Y = iInitialY + (int) PointEX[1][1];
+						  
+		G.X = iInitialX + (int) PointEX[2][0];
+		G.Y = iInitialY + (int) PointEX[2][1];
+						  
+		H.X = iInitialX + (int) PointEX[3][0];
+		H.Y = iInitialY + (int) PointEX[3][1];
+						  
+		A.X = iInitialX + (int) PointEX[4][0] ;
+		A.Y = iInitialY + (int) PointEX[4][1] ;
+						  
+		B.X = iInitialX + (int) PointEX[5][0] ;
+		B.Y = iInitialY + (int) PointEX[5][1] ;
+						  
+		C.X = iInitialX + (int) PointEX[6][0] ;
+		C.Y = iInitialY + (int) PointEX[6][1] ;
+						  
+		D.X = iInitialX + (int) PointEX[7][0] ;
+		D.Y = iInitialY + (int) PointEX[7][1] ;
 /*
 		E.X = iInitialX + PointE[0];
 		E.Y = iInitialY + PointE[1];
@@ -140,29 +146,44 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM lParam)
 		D.Y = iInitialY + PointD[1];
 		*/
 
-		hPen = ExtCreatePen(PS_COSMETIC | PS_SOLID, 1, &lb, 0, NULL);
+		//hPen = ExtCreatePen(PS_COSMETIC | PS_SOLID, 1, &lb, 0, NULL);
+		hPen = CreatePen(PS_SOLID, 1, RGB(255, 255, 255));
+		SelectObject(hdc,hPen);
 		DrawCube(hdc, E, F, G, H, A, B, C, D);
+		DeleteObject(hPen);
 		break;
 
 	case WM_KEYDOWN:
 		switch (wParam)
 		{
-/*
+		case 'X': // add flag so that x , y , z can be pressed only once
+			hThread1 = CreateThread(NULL, 0, (LPTHREAD_START_ROUTINE)MyThreadProcOne, (LPVOID)hwnd, 0, NULL);
+			break;
+		case 'Y':
+			hThread2 = CreateThread(NULL, 0, (LPTHREAD_START_ROUTINE)MyThreadProcTwo, (LPVOID)hwnd, 0, NULL);
+			break;
+		case 'Z':
+			hThread3 = CreateThread(NULL, 0, (LPTHREAD_START_ROUTINE)MyThreadProcThree, (LPVOID)hwnd, 0, NULL);
+			break;
+
 		case VK_UP:
-			y = y - 10;
+			RotateAlong(10,0,hwnd);
 			break;
-		case VK_DOWN:
-			y = y + 10;
-			break;
-*/
+		//case VK_DOWN:
+		//	RotateAlong(-10,0,hwnd);
+		//	break;
 		case VK_LEFT:
-			MessageBox(hwnd, TEXT("Hi"), TEXT("<- "), MB_OK);
-			RotateAlongY(30,hwnd);
+			RotateAlong(10,1,hwnd);
 			break;
-		case VK_RIGHT:
-			MessageBox(hwnd, TEXT("Hi"), TEXT(" ->"), MB_OK);
-			RotateAlongY(270,hwnd);
+		//case VK_RIGHT:
+		//	RotateAlong(-10,1,hwnd);
+		//	break;
+		case 'A':
+			RotateAlong(10, 2, hwnd);
 			break;
+		//case 'D':
+		//	RotateAlong(-10, 2, hwnd);
+		//	break;
 		}
 		InvalidateRect(hwnd, NULL, TRUE);
 		break;
@@ -177,6 +198,7 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM lParam)
 
 VOID DrawCube(HDC hdc, XYPOINT E, XYPOINT F, XYPOINT G, XYPOINT H, XYPOINT A, XYPOINT B, XYPOINT C, XYPOINT D)
 {
+	// Back Face
 	MoveToEx(hdc, E.X, E.Y, NULL);
 	LineTo(hdc, H.X, H.Y);
 
@@ -224,26 +246,79 @@ VOID DrawCube(HDC hdc, XYPOINT E, XYPOINT F, XYPOINT G, XYPOINT H, XYPOINT A, XY
 	// .. end ...
 }
 
-VOID RotateAlongY(INT Degree,HWND hwnd)
+VOID RotateAlong(INT Degree,INT Axis,HWND hwnd)
 {
-	TCHAR str[1000];
+	double TempPointEX[8][3] = {0};
+
+
 	double sin, cos;
-	if (Degree == 30)
+	if (Degree == 10)
 	{
-		sin = 0.5;
-		cos = 0.866;
+		sin = 0.1736481776;
+		cos = 0.9848077530;
 	}
 	else
 	{
-		sin = -1;
-		cos = 0;
+		sin = -0.1736481776;
+		cos = -0.9848077530;
 	}
 
-	double y[3][3] = { {cos,0,sin},{0,1,0},{-sin,0,cos} };
-//	int y2[3] = {0,1,0};
-//	int y3[3] = {-sin,0,cos};
-//	int temp = 0;
 
+	if (Axis == 0)
+	{
+		double y[3][3] = { { 1,0,0 },{ 0,cos,-sin },{ 0,sin,cos } };
+		for (int k = 0; k < 8; k++)
+		{
+
+			for (int l = 0; l < 3; l++)
+			{
+				double temp = 0;
+				for (int m = 0; m < 3; m++)
+				{
+					temp += y[l][m] * PointEX[k][m];
+				}
+				TempPointEX[k][l] = temp;
+			}
+		}
+	
+	}
+	else if (Axis == 1)
+	{
+		double y[3][3] = { { cos,0,sin },{ 0,1,0 },{ -sin,0,cos } };
+		for (int k = 0; k < 8; k++)
+		{
+
+			for (int l = 0; l < 3; l++)
+			{
+				double temp = 0;
+				for (int m = 0; m < 3; m++)
+				{
+					temp += y[l][m] * PointEX[k][m];
+				}
+				TempPointEX[k][l] = temp;
+			}
+		}
+	}
+	else
+	{
+		double y[3][3] = { { cos,-sin,0 },{ sin,cos,0 },{ 0,0,1 } };
+		for (int k = 0; k < 8; k++)
+		{
+
+			for (int l = 0; l < 3; l++)
+			{
+				double temp = 0;
+				for (int m = 0; m < 3; m++)
+				{
+					temp += y[l][m] * PointEX[k][m];
+				}
+				TempPointEX[k][l] = temp;
+			}
+		}
+	}
+
+//	double y[3][3] = { {cos,0,sin},{0,1,0},{-sin,0,cos} };
+/*
 	for (int k = 0; k < 8; k++)
 	{
 		
@@ -254,10 +329,174 @@ VOID RotateAlongY(INT Degree,HWND hwnd)
 			{
 				temp += y[l][m] * PointEX[k][m];
 			}
-			PointEX[k][l] = temp;
-			wsprintf(str, "%d ", temp);
-			MessageBox(hwnd, str, TEXT("str"), MB_OK);
+			TempPointEX[k][l] = temp;
 		}
 	}
-	
+*/
+
+	for (int i = 0; i < 8; i++)
+	{
+		for (int j = 0; j < 3; j++)
+		{
+			PointEX[i][j] = TempPointEX[i][j];
+		}
+	}
 }
+
+/*
+VOID RotateAlongX(INT Degree, HWND hwnd)
+{
+	TCHAR str[1000];
+	double TempPointEX[8][3] = { 0 };
+
+	double sin, cos;
+	if (Degree == 30)
+	{
+		sin = 0.5;
+		cos = 0.86;
+	}
+	else
+	{
+		sin = -0.5;
+		cos = -0.86;
+	}
+
+//	double y[3][3] = { { 1,0,0 },{ 0,cos,-sin },{ 0,sin,cos } };
+
+	for (int k = 0; k < 8; k++)
+	{
+
+		for (int l = 0; l < 3; l++)
+		{
+			double temp = 0;
+			for (int m = 0; m < 3; m++)
+			{
+				temp += y[l][m] * PointEX[k][m];
+			}
+			TempPointEX[k][l] = temp;
+		}
+	}
+
+	for (int i = 0; i < 8; i++)
+	{
+		for (int j = 0; j < 3; j++)
+		{
+			PointEX[i][j] = TempPointEX[i][j];
+		}
+	}
+}
+*/
+ 
+DWORD WINAPI MyThreadProcOne(LPVOID param)
+{
+	double TempPointEX[8][3] = { 0 };
+	HWND hwnd = (HWND)param;
+	double	sin = 0.1736481776;
+	double	cos = 0.9848077530;
+
+	double y[3][3] = { { 1,0,0 },{ 0,cos,-sin },{ 0,sin,cos } }; 
+	while (1)
+	{
+		for (int k = 0; k < 8; k++)
+		{
+
+			for (int l = 0; l < 3; l++)
+			{
+				double temp = 0;
+				for (int m = 0; m < 3; m++)
+				{
+					temp += y[l][m] * PointEX[k][m];
+				}
+				TempPointEX[k][l] = temp;
+			}
+		}
+		for (int i = 0; i < 8; i++)
+		{
+			for (int j = 0; j < 3; j++)
+			{
+				PointEX[i][j] = TempPointEX[i][j];
+			}
+		}
+
+		Sleep(t);
+		InvalidateRect(hwnd, NULL, TRUE);
+	}
+	return 0;
+}
+
+
+DWORD WINAPI MyThreadProcTwo(LPVOID param)
+{
+	double TempPointEX[8][3] = { 0 };
+	HWND hwnd = (HWND)param;
+	double	sin = 0.1736481776;
+	double	cos = 0.9848077530;
+
+	double y[3][3] = { { cos,0,sin },{ 0,1,0 },{ -sin,0,cos } };
+
+	while (1)
+	{
+		for (int k = 0; k < 8; k++)
+		{
+
+			for (int l = 0; l < 3; l++)
+			{
+				double temp = 0;
+				for (int m = 0; m < 3; m++)
+				{
+					temp += y[l][m] * PointEX[k][m];
+				}
+				TempPointEX[k][l] = temp;
+			}
+		}
+		for (int i = 0; i < 8; i++)
+		{
+			for (int j = 0; j < 3; j++)
+			{
+				PointEX[i][j] = TempPointEX[i][j];
+			}
+		}
+
+		Sleep(t);
+		InvalidateRect(hwnd, NULL, TRUE);
+	}
+	return 0;
+}
+
+DWORD WINAPI MyThreadProcThree(LPVOID param)
+{
+	double TempPointEX[8][3] = { 0 };
+	HWND hwnd = (HWND)param;
+	double	sin = 0.1736481776;
+	double	cos = 0.9848077530;
+
+	double y[3][3] = { { cos,-sin,0 },{ sin,cos,0 },{ 0,0,1 } };
+	while (1)
+	{
+		for (int k = 0; k < 8; k++)
+		{
+
+			for (int l = 0; l < 3; l++)
+			{
+				double temp = 0;
+				for (int m = 0; m < 3; m++)
+				{
+					temp += y[l][m] * PointEX[k][m];
+				}
+				TempPointEX[k][l] = temp;
+			}
+		}
+		for (int i = 0; i < 8; i++)
+		{
+			for (int j = 0; j < 3; j++)
+			{
+				PointEX[i][j] = TempPointEX[i][j];
+			}
+		}
+
+		Sleep(t);
+		InvalidateRect(hwnd, NULL, TRUE);
+	}
+	return 0;
+}
+
