@@ -1,0 +1,5 @@
+Windows Registry Editor Version 5.00
+[HKEY_CLASSES_ROOT\Wow6432Node\CLSID\{DC8F0D18-1800-40A4-97E5-5E1954EBC48F}]
+@="MyComDll"
+[HKEY_CLASSES_ROOT\Wow6432Node\CLSID\{DC8F0D18-1800-40A4-97E5-5E1954EBC48F}\InprocServer32]
+@="C:\\MyVisualStudio2017Projects\\01-Win32\\01-Window\\IDE\\bharat_mazire_win32_assignments\\COM\\01.ClassFactory\\ClassFactoryClient\\Debug\\ClassFactoryServer.dll"

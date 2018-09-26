@@ -1,5 +1,6 @@
 #include<windows.h>
 #include "MyHeader.h"
+#include"PhysicsDll.h"
 #include <io.h>  
 #include <stdio.h>  
 #include <stdlib.h>  
@@ -15,11 +16,28 @@
 LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
 BOOL    CALLBACK MyDlgProc(HWND, UINT, WPARAM, LPARAM);
 
-typedef struct InputData
+typedef struct InputDataPhysics
+{
+	CHAR cMass[10],cPlanat[10];
+}INPUT_DATA_PHY;
+
+typedef struct InputDataBiology
 {
 	CHAR name[50], address[50], age[3];
 	INT status;
-}INPUT_DATA;
+}INPUT_DATA_BIO;
+
+typedef struct InputDataChemistry
+{
+	CHAR name[50], address[50], age[3];
+	INT status;
+}INPUT_DATA_CHEM;
+
+typedef struct InputDataMath
+{
+	CHAR name[50], address[50], age[3];
+	INT status;
+}INPUT_DATA_MATH;
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmdLine, int iCmdShow)
 {
@@ -153,31 +171,77 @@ BOOL CALLBACK MyDlgProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM lParam)
 	TCHAR status[10];
 	int err;
 
-	INPUT_DATA ip;
+	INPUT_DATA_PHY IP_PHY;
 	FILE *stream;
 
+	// for dll
 
+	HMODULE hLib = NULL;
+	typedef int(*pfnWeightCalculate) (int,int);
+	pfnWeightCalculate pfn = NULL;
+
+
+	
+	int r,m,p;
+	m = 0;
+	p = 0;
+	r = 0;
+	char * mm = NULL;
+	char * pp = NULL;
+//	TCHAR result[40];
 	switch (iMsg)
 	{
 	case WM_INITDIALOG:
-		SetFocus(GetDlgItem(hwnd, ID_ETNAME));
+		SetFocus(GetDlgItem(hwnd, ID_ETMASS));
 		break;
 
 	case WM_COMMAND:
 		switch (LOWORD(wParam))
 		{
 		case IDOK:
-			GetDlgItemText(hwnd, ID_ETNAME, ip.name, 50);
-			GetDlgItemText(hwnd, ID_ETADDRESS, ip.address, 50);
-			GetDlgItemText(hwnd, ID_ETAGE, ip.age, 3);
-			ip.status = SendDlgItemMessage(hwnd, ID_RBMARRIED, BM_GETCHECK, 0, 0);
-			if (ip.status)
-				wsprintf(status, TEXT("MARRIED"));
-			else
-				wsprintf(status, TEXT("UNMARRIED"));
+			GetDlgItemText(hwnd, ID_ETMASS, IP_PHY.cMass, 10);
+			GetDlgItemText(hwnd, ID_COMBOBOX2, IP_PHY.cPlanat, 10);
 
-			wsprintf(str, TEXT(" Entered Name : %s \n Entered Address : %s \n Entered Age : %s \n Entered Status : %s\n"), ip.name, ip.address, ip.age, status);
-			MessageBox(hwnd, str, TEXT("TITLE"), MB_OK);
+			wsprintf(str, TEXT(" Entered MASS : %s \n Selected Planate : %s"),IP_PHY.cMass,IP_PHY.cPlanat);
+			MessageBox(hwnd, str, TEXT("Accepted Info."), MB_OK);
+			
+			hLib = LoadLibrary(TEXT("PhysicsDll.dll"));
+			if (hLib == NULL)
+			{
+				MessageBox(hwnd, TEXT("DLL LOADING FAILS !!"), TEXT("ERROR"), MB_OK);
+				DestroyWindow(hwnd);
+			}
+			else
+			{
+				MessageBox(hwnd, TEXT("DLL LOADING Successfull !!"), TEXT("NO ERROR"), MB_OK);
+			}
+
+			pfn = (pfnWeightCalculate)GetProcAddress(hLib, "WeightCalculator");
+			if (pfn == NULL)
+			{
+				MessageBox(hwnd, TEXT("PFN LOADING FAILS !!"), TEXT("ERROR"), MB_OK);
+				DestroyWindow(hwnd);
+			}
+			else
+			{
+				MessageBox(hwnd, TEXT("PFN LOADING Successfull !!"), TEXT("NO ERROR"), MB_OK);
+			}
+			wsprintf(str, TEXT("m is  %s and p is %s"), m, p);
+			MessageBox(hwnd, str, TEXT("result"), MB_OK);
+
+			wsprintf(mm, TEXT("%s"), IP_PHY.cMass);
+			wsprintf(pp, TEXT("%s"), IP_PHY.cPlanat);
+
+			m = atoi(mm);
+			p = atoi(pp);
+			wsprintf(str, TEXT("m is  %d and p is %d"), m,p);
+			MessageBox(hwnd, str, TEXT("result"), MB_OK);
+
+
+			r = pfn(m,p);
+			wsprintf(str, TEXT("resultant weight is  %s"), r);
+			MessageBox(hwnd, str, TEXT("result"), MB_OK);
+
 
 			err = fopen_s(&stream, "write.txt", "a+");
 			if (err != 0)

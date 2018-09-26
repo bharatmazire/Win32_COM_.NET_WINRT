@@ -6,3 +6,13 @@
  Entered Address :  
  Entered Age :  
  Entered Status : UNMARRIED
+ Entered Name :  
+ Entered Address :  
+ Entered Age :  
+ Entered Status : UNMARRIED
+ Entered Name :  
+ Entered Address :  
+ Entered Age :  
+ Entered Status : UNMARRIED
+ Entered MASS : 10  Entered MASS : 10 
+ Selected Planate : earth

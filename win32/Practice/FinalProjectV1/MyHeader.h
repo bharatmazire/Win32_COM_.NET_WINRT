@@ -1,5 +1,5 @@
 #define MY_BITMAP 101
-#define ID_ETNAME 102
+#define ID_ETMASS 102
 #define ID_ETADDRESS 103
 #define ID_ETAGE 104
 #define DATAENTRY 105
@@ -7,3 +7,8 @@
 #define ID_RBUNMARRIED 107
 #define ID_GROUPBOX1 108
 #define ID_GROUPBOX2 109
+#define ID_GROUPBOX3 110
+#define ID_GROUPBOX4 111
+#define IDRESET 112
+#define ID_COMBOBOX 113
+#define ID_COMBOBOX2 114
