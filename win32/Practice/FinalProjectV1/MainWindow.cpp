@@ -179,8 +179,6 @@ BOOL CALLBACK MyDlgProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM lParam)
 	HMODULE hLib = NULL;
 	typedef int(*pfnWeightCalculate) (int,int);
 	pfnWeightCalculate pfn = NULL;
-
-
 	
 	int r,m,p;
 	m = 0;
@@ -226,8 +224,9 @@ BOOL CALLBACK MyDlgProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM lParam)
 			{
 				MessageBox(hwnd, TEXT("PFN LOADING Successfull !!"), TEXT("NO ERROR"), MB_OK);
 			}
+			/*
 			wsprintf(str, TEXT("m is  %s and p is %s"), m, p);
-			MessageBox(hwnd, str, TEXT("result"), MB_OK);
+			MessageBox(hwnd, str, TEXT("result before atoi "), MB_OK);
 
 			wsprintf(mm, TEXT("%s"), IP_PHY.cMass);
 			wsprintf(pp, TEXT("%s"), IP_PHY.cPlanat);
@@ -235,10 +234,10 @@ BOOL CALLBACK MyDlgProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM lParam)
 			m = atoi(mm);
 			p = atoi(pp);
 			wsprintf(str, TEXT("m is  %d and p is %d"), m,p);
-			MessageBox(hwnd, str, TEXT("result"), MB_OK);
+			MessageBox(hwnd, str, TEXT("result after atoi"), MB_OK);
 
-
-			r = pfn(m,p);
+			*/
+			r = pfn(10,1);
 			wsprintf(str, TEXT("resultant weight is  %s"), r);
 			MessageBox(hwnd, str, TEXT("result"), MB_OK);
 
