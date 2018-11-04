@@ -1,0 +1,24 @@
+import "unknwn.idl";
+// IMyMath Interface
+
+[object, uuid(27583FD0-2EED-4A94-BAF5-26E288B9D729), helpstring("IMyMath Interface"), pointer_default(unique), dual, oleautomation]
+
+interface IMyMath : IDispatch
+{
+	import "oaidl.idl";
+	HRESULT SumOfTwoIntegers([in] int, [in] int, [out, retval] int *);
+	HRESULT SubtractionOfTwoIntegers([in] int, [in] int, [out, retval] int *);
+};
+
+[uuid(A52E59B2-8BBA-4479-9B18-D38F821ABCFC),version(1.0),helpstring("MyMath Component's Type Library")]
+
+library AutomationServerTypeLib
+{
+	importlib("stdole32.tlb");
+	[uuid(8FD1609B-35AF-4E51-9D6B-B8F17998AF3A),helpstring("Math Automation Component Class")]
+	coclass CMyMath
+	{
+		[default]interface IMyMath;
+	};
+};
+

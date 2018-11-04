@@ -1,0 +1,5 @@
+Windows Registry Editor Version 5.00
+[HKEY_CLASSES_ROOT\WOW6432Node\CLSID\{9EF21993-038B-4CDD-89CA-AC89B2AF1C3E}]
+@="SDKProjectMathsDll"
+[HKEY_CLASSES_ROOT\WOW6432Node\CLSID\{9EF21993-038B-4CDD-89CA-AC89B2AF1C3E}\InprocServer32]
+@="C:\\MyVisualStudio2017Projects\\01-Win32\\01-Window\\IDE\\bharat_mazire_win32_assignments\\Project\\03.Project Temp\\SDKProject\\Debug\\MathsDll.dll"

@@ -147,7 +147,7 @@ HRESULT CSumSubtract::InitializeInnerComponent(void)
 	hr = CoCreateInstance(CLSID_MultiplicationDivision, reinterpret_cast<IUnknown *>(this), CLSCTX_INPROC_SERVER, IID_IUnknown, (void **)&m_pIUnknownInner);
 	if (FAILED(hr))
 	{
-		MessageBox(NULL, TEXT("IMultiplication interface can not be obtain from inner component. "), TEXT("ERROR"), MB_OK);
+		MessageBox(NULL, TEXT("IUnknown interface can not be obtain from inner component. "), TEXT("ERROR"), MB_OK);
 		return(E_FAIL);
 	}
 

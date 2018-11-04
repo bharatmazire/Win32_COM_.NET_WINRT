@@ -1,0 +1,9 @@
+LIBRARY Shapes
+
+EXPORTS
+	Cube
+	ThreeCubes
+	FiveAngleStar
+	Pyramid
+	Diamond
+	Football

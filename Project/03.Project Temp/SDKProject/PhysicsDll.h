@@ -1,1 +1,1 @@
-extern "C" double WeightCalculator(double, int);
+extern "C" double WeightCalculator(double, double);

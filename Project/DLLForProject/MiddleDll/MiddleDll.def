@@ -1,0 +1,4 @@
+LIBRARY MiddleDll
+EXPORTS
+	SidesOfTriangle PRIVATE
+	AngleOfTriangle PRIVATE
