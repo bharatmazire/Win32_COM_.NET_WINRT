@@ -1,8 +1,11 @@
 // Headers
 #include<windows.h>
+#include"TicTacToe.h"
 
 // global function declarations
 LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
+BOOL    CALLBACK MyDlgProc(HWND, UINT, WPARAM, LPARAM);
+
 
 // WinMain()
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmdLine, int iCmdShow)
@@ -58,27 +61,41 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmdLi
 
 LRESULT CALLBACK WndProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM lParam)
 {
-	HDC hdc;
-	PAINTSTRUCT ps;
-	RECT rc;
-	HGDIOBJ hPen = NULL;
-	LOGBRUSH lb;
 	//code
 	switch (iMsg)
 	{
-	case WM_PAINT:
-		hdc = BeginPaint(hwnd, &ps);
-		GetClientRect(hwnd, &rc);
-		lb.lbStyle = BS_SOLID;
-		lb.lbColor = RGB(255, 255, 255);
-		lb.lbHatch = 0;
-		hPen = ExtCreatePen(PS_COSMETIC | PS_SOLID, 1, &lb, 0, NULL);
-		MoveToEx(hdc,0,200 , NULL);
-		LineTo(hdc,20 , 200);
+	case WM_CREATE:
+		if (DialogBox((HINSTANCE)GetWindowLong(hwnd, GWL_HINSTANCE), MAKEINTRESOURCE(TICTACTOE), hwnd, (DLGPROC)MyDlgProc) == IDOK)
+		{
+		}
+		else
+		{
+			MessageBox(hwnd, TEXT("Dialog Box Creation Failed"), TEXT("ERROR"), MB_OK | MB_ICONERROR);
+			DestroyWindow(hwnd);
+		}
 		break;
 	case WM_DESTROY:
 		PostQuitMessage(0);
 		break;
 	}
 	return(DefWindowProc(hwnd, iMsg, wParam, lParam));
+}
+
+BOOL CALLBACK MyDlgProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM lParam)
+{
+	switch (iMsg)
+	{
+	case WM_COMMAND:
+
+		switch (LOWORD(wParam))
+		{
+		case IDOK:
+			EndDialog(hwnd, wParam);
+			return TRUE;
+		case IDCANCEL:
+			EndDialog(hwnd, wParam);
+			return TRUE;
+		}
+	}
+	return FALSE;
 }

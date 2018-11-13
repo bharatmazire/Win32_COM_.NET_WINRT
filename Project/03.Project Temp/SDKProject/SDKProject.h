@@ -61,3 +61,24 @@
 #define IDCOMPUTE_MATH 142
 #define IDCLEAR_MATH 143
 #define ID_ETMATHRES 144
+
+// chemistry part
+#define ID_RBHEAT 145
+#define ID_RBREF 146
+#define ID_RBAC 147
+#define IDCOMPUTEHT_CHEM 148
+#define ID_ETHTQ1 149
+#define ID_ETHTQ2 150
+#define ID_ETHTEFF 151
+#define ID_ETHTWD 152
+#define ID_ETRFQ1 153
+#define ID_ETRFW 154
+#define ID_ETRFQ2 155
+#define ID_ETRFCOP 156
+#define IDCOMPUTERF_CHEM 157
+#define ID_ETACQ2 155
+#define ID_ETACW 159
+#define IDCOMPUTEAC_CHEM 160
+#define ID_ETACQ1 161
+#define ID_ETACCOP 162
+
