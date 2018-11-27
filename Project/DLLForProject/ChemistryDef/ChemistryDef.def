@@ -1,0 +1,3 @@
+LIBRARY ChemistryDef
+EXPORTS
+	ChemistryCalculation PRIVATE

@@ -1,5 +1,5 @@
 #import "Math.tlb" no_namespace, raw_interfaces_only
-#include "Debug\math.tlh"
+#include "math.tlh"
 
 #include<windows.h>
 #include<stdio.h>
@@ -70,7 +70,7 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM lParam)
 	void ComErrorDescriptionString(HWND, HRESULT);
 
 	HRESULT hr;
-	int iNum1, iNum2, iMultiply, iDivision;
+	long iNum1, iNum2, iMultiply, iDivision;
 	TCHAR str[255];
 
 	switch (iMsg)
@@ -123,7 +123,7 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM lParam)
 	}
 		break;
 	case WM_DESTROY:
-		SafeInterfaceRelease();
+		//SafeInterfaceRelease();
 		PostQuitMessage(0);
 		break;
 	}

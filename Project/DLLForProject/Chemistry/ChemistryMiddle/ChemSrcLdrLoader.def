@@ -1,0 +1,3 @@
+LIBRARY ChemSrcLdrLoader
+EXPORTS
+	ChemistryCalculation PRIVATE

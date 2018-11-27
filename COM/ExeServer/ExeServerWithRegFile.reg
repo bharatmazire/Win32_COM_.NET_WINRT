@@ -1,0 +1,5 @@
+Windows Registry Editor Version 5.00
+[HKEY_CLASSES_ROOT\WOW6432Node\CLSID\{CFC4A33F-E1E4-47F0-81BC-EA496E5C99E1}]
+@="ExeServer"
+[HKEY_CLASSES_ROOT\WOW6432Node\CLSID\{CFC4A33F-E1E4-47F0-81BC-EA496E5C99E1}\LocalServer32]
+@="C:\\MyVisualStudio2017Projects\\01-Win32\\01-Window\\IDE\\bharat_mazire_win32_assignments\\COM\\ExeServer\\ExeServerWithRegFile\\Debug\\ExeServerWithRegFile.exe"

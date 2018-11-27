@@ -1,0 +1,15 @@
+import "unknwn.idl";
+
+[object, uuid(09749A69-D03E-4165-BF6D-5A09EB3FD046),helpstring("ISum Interface"),pointer_default(unique)]
+
+interface IAdd : IUnknown
+{
+	HRESULT SumOfTwoIntegers([in]int, [in]int, [in, out]int*);
+};
+
+[object,uuid(AFD72FA6-4C74-4AF1-97C0-7A8595011597),helpstring("ISubtract Interface"),pointer_default(unique)]
+
+interface IMinus : IUnknown
+{
+	HRESULT SubtractionOfTwoIntegers([in]int, [in]int, [in, out]int*);
+};

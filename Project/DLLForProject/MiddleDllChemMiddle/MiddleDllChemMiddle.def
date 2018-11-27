@@ -1,0 +1,4 @@
+LIBRARY MiddleDllChemMiddle
+EXPORTS
+	ChemistryCalculation PRIVATE
+	

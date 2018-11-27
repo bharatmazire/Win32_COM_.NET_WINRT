@@ -1,0 +1,27 @@
+REGEDIT4
+
+[HKEY_CLASSES_ROOT\ManagedServerForInterop.Chemistry]
+@="ManagedServerForInterop.Chemistry"
+
+[HKEY_CLASSES_ROOT\ManagedServerForInterop.Chemistry\CLSID]
+@="{53D45F5E-9AC2-34AD-8C10-3C86A3BCBB06}"
+
+[HKEY_CLASSES_ROOT\CLSID\{53D45F5E-9AC2-34AD-8C10-3C86A3BCBB06}]
+@="ManagedServerForInterop.Chemistry"
+
+[HKEY_CLASSES_ROOT\CLSID\{53D45F5E-9AC2-34AD-8C10-3C86A3BCBB06}\InprocServer32]
+@="mscoree.dll"
+"ThreadingModel"="Both"
+"Class"="ManagedServerForInterop.Chemistry"
+"Assembly"="Chemistry, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
+"RuntimeVersion"="v4.0.30319"
+
+[HKEY_CLASSES_ROOT\CLSID\{53D45F5E-9AC2-34AD-8C10-3C86A3BCBB06}\InprocServer32\0.0.0.0]
+"Class"="ManagedServerForInterop.Chemistry"
+"Assembly"="Chemistry, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
+"RuntimeVersion"="v4.0.30319"
+
+[HKEY_CLASSES_ROOT\CLSID\{53D45F5E-9AC2-34AD-8C10-3C86A3BCBB06}\ProgId]
+@="ManagedServerForInterop.Chemistry"
+
+[HKEY_CLASSES_ROOT\CLSID\{53D45F5E-9AC2-34AD-8C10-3C86A3BCBB06}\Implemented Categories\{62C8FE65-4EBB-45E7-B440-6E39B2CDBF29}]

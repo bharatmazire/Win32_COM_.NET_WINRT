@@ -70,7 +70,7 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM lParam)
 	void ComErrorDescriptionString(HWND, HRESULT);
 
 	HRESULT hr;
-	int iNum1, iNum2, iMultiply, iDivision;
+	long iNum1, iNum2, iMultiply, iDivision;
 	TCHAR str[255];
 
 	switch (iMsg)

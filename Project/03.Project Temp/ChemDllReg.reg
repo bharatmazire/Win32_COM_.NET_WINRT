@@ -1,0 +1,5 @@
+Windows Registry Editor Version 5.00
+[HKEY_CLASSES_ROOT\WOW6432Node\CLSID\{4023D09A-7FD7-4142-B73D-FD0878B3F3C2}]
+@="SDKProjectChemDll"
+[HKEY_CLASSES_ROOT\WOW6432Node\CLSID\{4023D09A-7FD7-4142-B73D-FD0878B3F3C2}\InprocServer32]
+@="C:\\MyVisualStudio2017Projects\\01-Win32\\01-Window\\IDE\\bharat_mazire_win32_assignments\\Project\\03.Project Temp\\SDKProject\\Debug\\MiddleDllChem.dll"

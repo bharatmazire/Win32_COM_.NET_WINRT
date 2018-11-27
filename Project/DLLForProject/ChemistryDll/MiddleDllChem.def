@@ -1,0 +1,4 @@
+LIBRARY MiddleDllChem
+EXPORTS
+	DllGetClassObject PRIVATE
+	DllCanUnloadNow PRIVATE

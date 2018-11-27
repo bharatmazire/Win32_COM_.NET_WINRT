@@ -1,0 +1,9 @@
+LIBRARY ProxyStub.dll
+DESCRIPTION 'MIDL Generated ProxyStub Dll File'
+EXPORTS
+	DllGetClassObject PRIVATE
+	DllCabUnloadNow PRIVATE
+	GetProxyDllInfo PRIVATE
+	DllRegisterServer PRIVATE
+	DllUnregisterServer PRIVATE
+

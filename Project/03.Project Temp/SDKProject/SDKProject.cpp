@@ -2,6 +2,8 @@
 #include "SDKProject.h"
 #include"PhysicsDll.h"
 #include"MiddleDll.h"
+#include"ChemistryServerLoader.h"
+
 #include <io.h>  
 #include <stdio.h>  
 #include <stdlib.h>  
@@ -32,6 +34,7 @@ void ResetBiology(HWND);
 // for dll's
 static HMODULE hLibPhy = NULL;
 static HMODULE hLibMaths = NULL;
+static HMODULE hLibChem = NULL;
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmdLine, int iCmdShow)
 {
@@ -111,6 +114,14 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM lParam)
 			DestroyWindow(hwnd);
 		}
 
+		// loding chem middlemiddle library
+		hLibChem = LoadLibrary(TEXT("ChemSrcLdrLoader.dll"));
+		if (hLibChem == NULL)
+		{
+			MessageBox(hwnd, TEXT("Chemistry Dll Loading Fails !!"), TEXT("ERROR"), MB_OK);
+			DestroyWindow(hwnd);
+		}
+
 		break;
 #pragma endregion
 
@@ -178,6 +189,8 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM lParam)
 #pragma region WM_DESTROY
 	case WM_DESTROY:
 		FreeLibrary(hLibPhy);
+		FreeLibrary(hLibMaths);
+		FreeLibrary(hLibChem);
 		PostQuitMessage(0);
 		break;
 	}
@@ -190,14 +203,21 @@ BOOL CALLBACK MyDlgProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM lParam)
 {
 	static CHAR str[20],str2[20];
 	int err;
-	static double dWeight,dMass;
+	// physics
+	
+	//maths
+	
 
+
+#pragma region PHYDLL
 	// for physics dll
 	typedef double(*pfnWeightCalculate) (double, double);
 	static pfnWeightCalculate pfn = NULL;
-
+	static double dWeight, dMass;
 	static double dResult;
+#pragma endregion
 
+#pragma region MATHDLL
 	// for maths part
 	typedef HRESULT(*pfnSidesTriangle) (double , double , double , double , double , double , int* );
 	static pfnSidesTriangle pfnSidesOfTriangle = NULL;
@@ -205,18 +225,28 @@ BOOL CALLBACK MyDlgProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM lParam)
 	typedef HRESULT(*pfnAngleTriangle) (double, double, double, int*);
 	static pfnAngleTriangle pfnAngleOfTriangle = NULL;
 
-	static int iTypeOfTriangle; 
+	 
 	// 1 : Equilateral \n 2 : Isosceles \n 3 : right angle \n 4 : Scelenes FOR SIDE
 	// 1 : Equilateral \n 2 : Isosceles \n 3 : right angle \n 4 : obtuse \n 5.Acute \n 6.Scelenes  \n 7. Wrong input  FOR ANGLE
-
+	static int iTypeOfTriangle;
 	static int iMathMode; // 1 for side 2 for angle
 
 	static CHAR x1[10], x2[10], x3[10], y1[10], y2[10], y3[10];
 	static CHAR a[10], b[10], c[10];
+#pragma endregion
 
+#pragma region CHEMDLL
+	// for chemistry part
+	typedef HRESULT(*pfnChemistryCalculation) (int, double, double, double*);
+	static pfnChemistryCalculation pfnChem = NULL;
 
+	static int iChemMode = 1;
+	static CHAR v1[10], v2[10];
+	static double vv1, vv2 , q1, q2, w, e, cop;
+	static double ret;
+	static char strchem1[20], strchem2[20];
+#pragma endregion
 
-	
 	FILE *stream;
 
 	switch (iMsg)
@@ -531,7 +561,136 @@ BOOL CALLBACK MyDlgProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM lParam)
 				ResetMaths(hwnd);
 				ResetBiology(hwnd);
 				EnableWindow(GetDlgItem(hwnd, ID_ETCHEM), TRUE);
-				
+				EnableWindow(GetDlgItem(hwnd, ID_CHEMBTHEAT), TRUE);
+				EnableWindow(GetDlgItem(hwnd, ID_CHEMBTNREF), TRUE);
+				EnableWindow(GetDlgItem(hwnd, ID_CHEMBTAC), TRUE);
+				EnableWindow(GetDlgItem(hwnd, ID_CHEMPOS1), TRUE);
+				EnableWindow(GetDlgItem(hwnd, ID_CHEMPOS2), TRUE);
+				EnableWindow(GetDlgItem(hwnd, ID_CHEMPOS3), TRUE);
+				EnableWindow(GetDlgItem(hwnd, ID_CHEMPOS4), TRUE);
+				EnableWindow(GetDlgItem(hwnd, ID_CHEMET1), TRUE);
+				EnableWindow(GetDlgItem(hwnd, ID_CHEMET2), TRUE);
+				EnableWindow(GetDlgItem(hwnd, ID_CHEMET3), TRUE);
+				EnableWindow(GetDlgItem(hwnd, ID_CHEMET4), TRUE);
+				EnableWindow(GetDlgItem(hwnd, ID_CHEMCOMPUTE), TRUE);
+
+				pfnChem = (pfnChemistryCalculation)GetProcAddress(hLibChem, "ChemistryCalculation");
+				if (pfnChem == NULL)
+				{
+					MessageBox(hwnd, TEXT("pfnChemistryCalculation LOADING FAILS !!"), TEXT("ERROR"), MB_OK);
+					DestroyWindow(hwnd);
+				}
+
+
+				break;
+			}
+			break;
+		case ID_CHEMBTHEAT:
+			switch (HIWORD(wParam))
+			{
+			case BN_CLICKED:
+				SetDlgItemText(hwnd, ID_CHEMPOS1, "Enter Q1 : ");
+				SetDlgItemText(hwnd, ID_CHEMPOS2, "Enter Q2 : ");
+				SetDlgItemText(hwnd, ID_CHEMPOS3, "Effeciency : ");
+				SetDlgItemText(hwnd, ID_CHEMPOS4, "Work Done : ");
+				iChemMode = 1;
+				break;
+			}
+			break;
+		case ID_CHEMBTNREF:
+			switch (HIWORD(wParam))
+			{
+			case BN_CLICKED:
+				SetDlgItemText(hwnd, ID_CHEMPOS1, "Enter Q1 : ");
+				SetDlgItemText(hwnd, ID_CHEMPOS2, "Enter W : ");
+				SetDlgItemText(hwnd, ID_CHEMPOS3, "Q2 : ");
+				SetDlgItemText(hwnd, ID_CHEMPOS4, "C. O. P. : ");
+				iChemMode = 2;
+				break;
+			}
+			break;
+		case ID_CHEMBTAC:
+			switch (HIWORD(wParam))
+			{
+			case BN_CLICKED:
+				SetDlgItemText(hwnd, ID_CHEMPOS1, "Enter Q2 : ");
+				SetDlgItemText(hwnd, ID_CHEMPOS2, "Enter W : ");
+				SetDlgItemText(hwnd, ID_CHEMPOS3, "Q1 : ");
+				SetDlgItemText(hwnd, ID_CHEMPOS4, "C. O. P. : ");
+				iChemMode = 3;
+				break;
+			}
+			break;
+
+		case ID_CHEMCOMPUTE:
+			switch (HIWORD(wParam))
+			{
+			case BN_CLICKED:
+				if (iChemMode == 1)
+				{
+					//heat: ip q1 q2
+					//w = q1 - q2
+					//eff = w / q1
+					
+					GetDlgItemText(hwnd, ID_CHEMET1, v1, 10);
+					GetDlgItemText(hwnd, ID_CHEMET2, v2, 10);
+					vv1 = atof(v1);
+					vv2 = atof(v2);
+					
+					w = vv1 - vv2;
+
+					pfnChem(1, vv1, vv2, &ret);
+					
+					StringCbPrintfA(strchem1, 20, "%f", ret);
+					StringCbPrintfA(strchem2, 20, "%f", w);
+
+					SetDlgItemText(hwnd, ID_CHEMET3, strchem1);
+					SetDlgItemText(hwnd, ID_CHEMET4, strchem2);
+
+				}
+				else if (iChemMode == 2)
+				{
+				/*  ref: ip q1 w
+					q2 = q1 + w
+					cop = q2 / w or q2 / (q1 - q2)*/
+
+					GetDlgItemText(hwnd, ID_CHEMET1, v1, 10);
+					GetDlgItemText(hwnd, ID_CHEMET2, v2, 10);
+					vv1 = atof(v1);
+					vv2 = atof(v2);
+
+					q2 = vv1 + vv2;
+
+					pfnChem(1, vv1, vv2, &ret);
+
+					StringCbPrintfA(strchem1, 20, "%f", ret);
+					StringCbPrintfA(strchem2, 20, "%f", q2);
+
+					SetDlgItemText(hwnd, ID_CHEMET3, strchem1);
+					SetDlgItemText(hwnd, ID_CHEMET4, strchem2);
+
+				}
+				else if (iChemMode == 3)
+				{
+					/*ac: ip q2 w
+					q1 = q2 + w
+					cop = q1 / w*/
+					GetDlgItemText(hwnd, ID_CHEMET1, v1, 10);
+					GetDlgItemText(hwnd, ID_CHEMET2, v2, 10);
+					vv1 = atof(v1);
+					vv2 = atof(v2);
+
+					q1 = vv1 + vv2;
+
+					pfnChem(1, vv1, vv2, &ret);
+
+					StringCbPrintfA(strchem1, 20, "%f", ret);
+					StringCbPrintfA(strchem2, 20, "%f", q1);
+
+					SetDlgItemText(hwnd, ID_CHEMET3, strchem1);
+					SetDlgItemText(hwnd, ID_CHEMET4, strchem2);
+				}
+
 				break;
 			}
 			break;
@@ -719,6 +878,24 @@ BOOL CALLBACK MyDlgProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM lParam)
 				break;
 			}
 			break;
+
+		case ID_RBBIO1: 
+			switch (HIWORD(wParam))
+			{
+			case BN_CLICKED:
+				SetDlgItemText(hwnd, ID_TESTBIO, "AA");
+				break;
+			}
+			break;
+
+		case ID_RBBIO2:
+			switch (HIWORD(wParam))
+			{
+			case BN_CLICKED:
+				SetDlgItemText(hwnd, ID_TESTBIO, "BB");
+				break;
+			}
+			break;
 #pragma endregion
 
 #pragma region RESET_KEY
@@ -776,6 +953,14 @@ void ClearPhysics(HWND hwnd)
 void ClearChemistry(HWND hwnd)
 {
 	SetDlgItemText(hwnd, ID_ETCHEM, "");
+	SetDlgItemText(hwnd, ID_CHEMPOS1, "");
+	SetDlgItemText(hwnd, ID_CHEMPOS2, "");
+	SetDlgItemText(hwnd, ID_CHEMPOS3, "");
+	SetDlgItemText(hwnd, ID_CHEMPOS4, "");
+	SetDlgItemText(hwnd, ID_CHEMET1, "");
+	SetDlgItemText(hwnd, ID_CHEMET2 , "");
+	SetDlgItemText(hwnd, ID_CHEMET3, "");
+	SetDlgItemText(hwnd, ID_CHEMET4, "");
 }
 void ClearMaths(HWND hwnd)
 {
@@ -821,6 +1006,19 @@ void ResetChemistry(HWND hwnd)
 {
 	ClearChemistry(hwnd);
 	EnableWindow(GetDlgItem(hwnd, ID_ETCHEM), FALSE);
+	EnableWindow(GetDlgItem(hwnd,ID_CHEMBTHEAT), FALSE);
+	EnableWindow(GetDlgItem(hwnd,ID_CHEMBTNREF), FALSE);
+	EnableWindow(GetDlgItem(hwnd,ID_CHEMBTAC  ), FALSE);
+	EnableWindow(GetDlgItem(hwnd,ID_CHEMPOS1  ), FALSE);
+	EnableWindow(GetDlgItem(hwnd,ID_CHEMPOS2  ), FALSE);
+	EnableWindow(GetDlgItem(hwnd,ID_CHEMPOS3  ), FALSE);
+	EnableWindow(GetDlgItem(hwnd,ID_CHEMPOS4  ), FALSE);
+	EnableWindow(GetDlgItem(hwnd,ID_CHEMET1   ), FALSE);
+	EnableWindow(GetDlgItem(hwnd,ID_CHEMET2	  ), FALSE);
+	EnableWindow(GetDlgItem(hwnd,ID_CHEMET3   ), FALSE);
+	EnableWindow(GetDlgItem(hwnd,ID_CHEMET4   ), FALSE);
+
+
 }
 void ResetMaths(HWND hwnd)
 {
