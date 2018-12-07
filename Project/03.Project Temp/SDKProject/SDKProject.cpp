@@ -286,7 +286,7 @@ BOOL CALLBACK MyDlgProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM lParam)
 				ResetChemistry(hwnd);
 				ResetMaths(hwnd);
 				ResetBiology(hwnd);
-				
+
 				EnableWindow(GetDlgItem(hwnd, IDCLEAR_PHY), TRUE);
 				EnableWindow(GetDlgItem(hwnd, ID_ETGRAVITY), TRUE);
 				EnableWindow(GetDlgItem(hwnd, IDCOMPUTE_PHY), TRUE);
@@ -580,8 +580,6 @@ BOOL CALLBACK MyDlgProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM lParam)
 					MessageBox(hwnd, TEXT("pfnChemistryCalculation LOADING FAILS !!"), TEXT("ERROR"), MB_OK);
 					DestroyWindow(hwnd);
 				}
-
-
 				break;
 			}
 			break;
@@ -873,7 +871,7 @@ BOOL CALLBACK MyDlgProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM lParam)
 				ResetPhysics(hwnd);
 				ResetChemistry(hwnd);
 				ResetMaths(hwnd);
-				
+
 				EnableWindow(GetDlgItem(hwnd, ID_ETBIO), TRUE);
 				break;
 			}

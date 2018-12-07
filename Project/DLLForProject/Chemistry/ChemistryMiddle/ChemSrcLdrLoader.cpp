@@ -30,14 +30,15 @@ extern "C" int ChemistryCalculation(int t, double val1, double val2, double *ret
 	typedef HRESULT(*pfnChemistryCalculation) (int, double, double, double*); // i guess here return type should be int, instead of HRESULT
 	static pfnChemistryCalculation pfnChem = NULL;
 
-	pfnChem = (pfnChemistryCalculation)GetProcAddress(hLibChem, "ChemistryCalculation");
-	if (pfnChem == NULL)
-	{
-		MessageBox(NULL, TEXT("pfnChemistryCalculation LOADING FAILS !!"), TEXT("ERROR"), MB_OK);
-	}
-	double ans;
-	pfnChem(t, val1, val2, &ans);
-	*ret = ans;
+
+		pfnChem = (pfnChemistryCalculation)GetProcAddress(hLibChem, "ChemistryCalculation");
+		if (pfnChem == NULL)
+		{
+			MessageBox(NULL, TEXT("pfnChemistryCalculation LOADING FAILS !!"), TEXT("ERROR"), MB_OK);
+		}
+		double ans;
+		pfnChem(t, val1, val2, &ans);
+		*ret = ans;
 
 	FreeLibrary(hLibChem);
 	return (0);

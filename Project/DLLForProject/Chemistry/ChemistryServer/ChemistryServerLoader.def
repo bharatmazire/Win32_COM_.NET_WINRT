@@ -1,3 +1,4 @@
 LIBRARY ChemistryServerLoader
 EXPORTS
-	ChemistryCalculation PRIVATE
+	ChemistryCalculation 
+
