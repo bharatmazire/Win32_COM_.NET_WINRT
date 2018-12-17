@@ -1,0 +1,4 @@
+planate : SUN 
+ Gravitation : 274.000000 
+ Weight : 11.000000 
+ Result : 307.613799 

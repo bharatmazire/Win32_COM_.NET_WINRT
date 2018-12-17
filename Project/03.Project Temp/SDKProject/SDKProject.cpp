@@ -201,12 +201,32 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM lParam)
 
 BOOL CALLBACK MyDlgProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM lParam)
 {
-	static CHAR str[20],str2[20];
+	static int subject;
+	static CHAR str[20],str2[20],sstr[200];
 	int err;
 	// physics
+	static int planat = 0;
+	static double g = 0.0;	// gravity to write in file
+	static double ww = 0.0; // weight to write in file
+	static double r = 0.0;
+	// maths
 	
-	//maths
+	static double mx1 = 0.0;
+	static double mx2 = 0.0;
+	static double mx3 = 0.0;
+	static double mx4 = 0.0;
+	static double mx5 = 0.0;
+	static double mx6 = 0.0;
+
+	static double mx7 = 0.0;
+	static double mx8 = 0.0;
+	static double mx9 = 0.0;
 	
+	// chemistry
+	static double cv1 = 0.0;
+	static double cv2 = 0.0;
+	static double cv3 = 0.0;
+	static double cv4 = 0.0;
 
 
 #pragma region PHYDLL
@@ -283,6 +303,7 @@ BOOL CALLBACK MyDlgProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM lParam)
 			switch (HIWORD(wParam))
 			{
 			case BN_CLICKED:
+				subject = 1;
 				ResetChemistry(hwnd);
 				ResetMaths(hwnd);
 				ResetBiology(hwnd);
@@ -323,12 +344,25 @@ BOOL CALLBACK MyDlgProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM lParam)
 			GetDlgItemText(hwnd, ID_ETGRAVITY, str2, 20);
 
 			dWeight = atof(str);
-
+			
 			dMass = dWeight / 9.798;
 			dResult = pfn(dMass, atof(str2));
+			r = dResult;
+			if (ww == atof(str) && g == atof(str2) && dResult == r)
+				subject = -1;
+			else
+			{
+				ww = atof(str);
+				g = atof(str2);
+				r = dResult;
+			}
 
 			StringCbPrintfA(str, 20, "%f", dResult);
 
+			
+
+			
+			
 			SetDlgItemText(hwnd, ID_ETGRAVITY, str2);
 			SetDlgItemText(hwnd, ID_ETWEIGHT2, str);
 			break;
@@ -344,7 +378,20 @@ BOOL CALLBACK MyDlgProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM lParam)
 				dMass = dWeight / 9.798;
 				dResult = pfn(dMass, 274);
 				
+				if ( r == dResult && planat == 1 && ww == atof(str) && g == 274)
+					subject = -1;
+				else
+				{
+					planat = 1;
+					ww = atof(str);
+					g = 274;
+					r = dResult;
+				
+				}
+
 				StringCbPrintfA(str, 20, "%f", dResult);
+				
+				
 				
 				SetDlgItemText(hwnd, ID_ETGRAVITY, "274");
 				SetDlgItemText(hwnd, ID_ETWEIGHT2, str);
@@ -363,7 +410,20 @@ BOOL CALLBACK MyDlgProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM lParam)
 				dMass = dWeight / 9.798;
 				dResult = pfn(dMass, 24.92);
 
+				if ( r == dResult && planat == 2 && ww == atof(str) && g == 24.92)
+					subject = -1;
+				else
+				{
+					planat = 2;
+					ww = atof(str);
+					g = 24.92;
+					r = dResult;
+				}
+
+
 				StringCbPrintfA(str, 20, "%f", dResult);
+
+
 
 				SetDlgItemText(hwnd, ID_ETGRAVITY, "24.92");
 				SetDlgItemText(hwnd, ID_ETWEIGHT2, str);
@@ -381,6 +441,16 @@ BOOL CALLBACK MyDlgProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM lParam)
 				
 				dMass = dWeight / 9.798;
 				dResult = pfn(dMass, 11.15);
+
+				if ( r == dResult && planat == 3 && ww == atof(str) && g == 11.15)
+					subject = -1;
+				else
+				{
+					planat = 3;
+					ww = atof(str);
+					g = 11.15;
+					r = dResult;
+				}
 
 				StringCbPrintfA(str, 20, "%f", dResult);
 
@@ -402,7 +472,18 @@ BOOL CALLBACK MyDlgProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM lParam)
 				dMass = dWeight / 9.798;
 				dResult = pfn(dMass, 10.44);
 
+				if ( r == dResult && planat == 4 && ww == atof(str) && g == 10.44)
+					subject = -1;
+				else
+				{
+					planat = 4;
+					ww = atof(str);
+					g = 10.44;
+					r = dResult;
+				}
+
 				StringCbPrintfA(str, 20, "%f", dResult);
+
 
 				SetDlgItemText(hwnd, ID_ETGRAVITY, "10.44");
 				SetDlgItemText(hwnd, ID_ETWEIGHT2, str);
@@ -421,7 +502,19 @@ BOOL CALLBACK MyDlgProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM lParam)
 				dMass = dWeight / 9.798;
 				dResult = pfn(dMass, 9.798);
 
+				if ( r == dResult && planat == 5 && ww == atof(str) && g == 9.798)
+					subject = -1;
+				else
+				{
+					planat = 5;
+					ww = atof(str);
+					g = 9.798;
+					r = dResult;
+				}
+				
 				StringCbPrintfA(str, 20, "%f", dResult);
+
+				
 
 				SetDlgItemText(hwnd, ID_ETGRAVITY, "9.798");
 				SetDlgItemText(hwnd, ID_ETWEIGHT2, str);
@@ -440,7 +533,20 @@ BOOL CALLBACK MyDlgProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM lParam)
 				dMass = dWeight / 9.798;
 				dResult = pfn(dMass, 8.87);
 
+				if ( r == dResult && planat == 6 && ww == atof(str) && g == 8.87)
+					subject = -1;
+				else
+				{
+					planat = 6;
+					ww = atof(str);
+					g = 8.87;
+					r = dResult;
+				}
+
+
 				StringCbPrintfA(str, 20, "%f", dResult);
+
+				
 
 				SetDlgItemText(hwnd, ID_ETGRAVITY, "8.87");
 				SetDlgItemText(hwnd, ID_ETWEIGHT2, str);
@@ -459,7 +565,19 @@ BOOL CALLBACK MyDlgProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM lParam)
 				dMass = dWeight / 9.798;
 				dResult = pfn(dMass, 8.87);
 
+				if ( r == dResult && planat == 7 && ww == atof(str) && g == 8.87)
+					subject = -1;
+				else
+				{
+					planat = 7;
+					ww = atof(str);
+					g = 8.87;
+					r = dResult;
+				}
+
 				StringCbPrintfA(str, 20, "%f", dResult);
+
+				
 
 				SetDlgItemText(hwnd, ID_ETGRAVITY, "8.87");
 				SetDlgItemText(hwnd, ID_ETWEIGHT2, str);
@@ -478,7 +596,20 @@ BOOL CALLBACK MyDlgProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM lParam)
 				dMass = dWeight / 9.798;
 				dResult = pfn(dMass, 3.71);
 
+
+				if ( r == dResult && planat == 8 && ww == atof(str) && g == 3.71)
+					subject = -1;
+				else
+				{
+					planat = 8;
+					ww = atof(str);
+					g = 3.71;
+					r = dResult;
+				}
+
 				StringCbPrintfA(str, 20, "%f", dResult);
+
+				
 
 				SetDlgItemText(hwnd, ID_ETGRAVITY, "3.71");
 				SetDlgItemText(hwnd, ID_ETWEIGHT2, str);
@@ -497,7 +628,19 @@ BOOL CALLBACK MyDlgProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM lParam)
 				dMass = dWeight / 9.798;
 				dResult = pfn(dMass, 3.7);
 
+				if ( r == dResult && planat == 9 && ww == atof(str) && g == 3.7)
+					subject = -1;
+				else
+				{
+					planat = 9;
+					ww = atof(str);
+					g = 3.7;
+					r = dResult;
+				}
+
 				StringCbPrintfA(str, 20, "%f", dResult);
+
+				
 
 				SetDlgItemText(hwnd, ID_ETGRAVITY, "3.7");
 				SetDlgItemText(hwnd, ID_ETWEIGHT2, str);
@@ -516,7 +659,19 @@ BOOL CALLBACK MyDlgProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM lParam)
 				dMass = dWeight / 9.798;
 				dResult = pfn(dMass, 1.68);
 
+				if ( r == dResult && planat == 10 && ww == atof(str) && g == 1.68)
+					subject = -1;
+				else
+				{
+					planat = 10;
+					ww = atof(str);
+					g = 1.68;
+					r = dResult;
+				}
+
 				StringCbPrintfA(str, 20, "%f", dResult);
+
+				
 
 				SetDlgItemText(hwnd, ID_ETGRAVITY, "1.68");
 				SetDlgItemText(hwnd, ID_ETWEIGHT2, str);
@@ -535,7 +690,19 @@ BOOL CALLBACK MyDlgProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM lParam)
 				dMass = dWeight / 9.798;
 				dResult = pfn(dMass, 0.58);
 
+				if ( r == dResult && planat == 11 && ww == atof(str) && g == 0.58)
+					subject = -1;
+				else
+				{
+					planat = 11;
+					ww = atof(str);
+					g = 0.58;
+					r = dResult;
+				}
+
 				StringCbPrintfA(str, 20, "%f", dResult);
+
+				
 
 				SetDlgItemText(hwnd, ID_ETGRAVITY, "0.58");
 				SetDlgItemText(hwnd, ID_ETWEIGHT2, str);
@@ -556,6 +723,7 @@ BOOL CALLBACK MyDlgProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM lParam)
 			switch (HIWORD(wParam))
 			{
 			case BN_CLICKED:
+				subject = 2;
 				ClearPhysics(hwnd);
 				ResetPhysics(hwnd);
 				ResetMaths(hwnd);
@@ -635,6 +803,9 @@ BOOL CALLBACK MyDlgProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM lParam)
 					vv1 = atof(v1);
 					vv2 = atof(v2);
 					
+					
+
+
 					w = vv1 - vv2;
 
 					pfnChem(1, vv1, vv2, &ret);
@@ -642,6 +813,16 @@ BOOL CALLBACK MyDlgProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM lParam)
 					StringCbPrintfA(strchem1, 20, "%f", ret);
 					StringCbPrintfA(strchem2, 20, "%f", w);
 
+					if (cv1 == vv1 && cv2 == vv2 && cv3 == ret && cv4 == w)
+						subject = -1;
+					else
+					{
+						cv1 = vv1;
+						cv2 = vv2;
+						cv3 = ret;
+						cv4 = w;
+					}
+						
 					SetDlgItemText(hwnd, ID_CHEMET3, strchem1);
 					SetDlgItemText(hwnd, ID_CHEMET4, strchem2);
 
@@ -664,6 +845,17 @@ BOOL CALLBACK MyDlgProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM lParam)
 					StringCbPrintfA(strchem1, 20, "%f", ret);
 					StringCbPrintfA(strchem2, 20, "%f", q2);
 
+					if (cv1 == vv1 && cv2 == vv2 && cv3 == ret && cv4 == q2)
+						subject = -1;
+					else
+					{
+						cv1 = vv1;
+						cv2 = vv2;
+						cv3 = ret;
+						cv4 = q2;
+					}
+
+
 					SetDlgItemText(hwnd, ID_CHEMET3, strchem1);
 					SetDlgItemText(hwnd, ID_CHEMET4, strchem2);
 
@@ -685,6 +877,17 @@ BOOL CALLBACK MyDlgProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM lParam)
 					StringCbPrintfA(strchem1, 20, "%f", ret);
 					StringCbPrintfA(strchem2, 20, "%f", q1);
 
+					if (cv1 == vv1 && cv2 == vv2 && cv3 == ret && cv4 == q1)
+						subject = -1;
+					else
+					{
+						cv1 = vv1;
+						cv2 = vv2;
+						cv3 = ret;
+						cv4 = q1;
+					}
+
+
 					SetDlgItemText(hwnd, ID_CHEMET3, strchem1);
 					SetDlgItemText(hwnd, ID_CHEMET4, strchem2);
 				}
@@ -700,6 +903,7 @@ BOOL CALLBACK MyDlgProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM lParam)
 			switch (HIWORD(wParam))
 			{
 			case BN_CLICKED:
+				subject = 3;
 				ResetPhysics(hwnd);
 				ClearPhysics(hwnd);
 				ResetChemistry(hwnd);
@@ -800,6 +1004,23 @@ BOOL CALLBACK MyDlgProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM lParam)
 				GetDlgItemText(hwnd, ID_ETMATHY3, y3, 10);
 
 				pfnSidesOfTriangle(atof(x1), atof(x2), atof(x3), atof(y1), atof(y2), atof(y3), &iTypeOfTriangle);
+				if (mx1 == atof(x1) &&
+					mx2 == atof(x2) &&
+					mx3 == atof(x3) &&
+					mx4 == atof(y1) &&
+					mx5 == atof(y2) &&
+					mx6 == atof(y3))
+					subject = -1;
+				else
+				{
+					mx1 = atof(x1);
+					mx2 = atof(x2);
+					mx3 = atof(x3);
+					mx4 = atof(y1);
+					mx5 = atof(y2);
+					mx6 = atof(y3);
+				}
+				
 				// 1 : Equilateral \n 2 : Isosceles \n 3 : right angle \n 4 : Scelenes FOR SIDE
 				switch (iTypeOfTriangle)
 				{
@@ -827,6 +1048,15 @@ BOOL CALLBACK MyDlgProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM lParam)
 				GetDlgItemText(hwnd, ID_ETMATHC, c, 10);
 
 				pfnAngleOfTriangle(atof(a), atof(b), atof(c), &iTypeOfTriangle);
+				if (mx7 == atof(a) && mx8 == atof(b) && mx9 == atof(c))
+					subject = -1;
+				else
+				{
+					mx7 = atof(a);
+					mx8 = atof(b);
+					mx9 = atof(c);
+				}
+				
 				// 1 : Equilateral \n 2 : Isosceles \n 3 : right angle \n 4 : obtuse \n 5.Acute \n 6.Scelenes  \n 7. Wrong input  FOR ANGLE
 				switch (iTypeOfTriangle)
 				{
@@ -915,13 +1145,84 @@ BOOL CALLBACK MyDlgProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM lParam)
 
 #pragma region SAVE_KEY
 		case IDOK:
-			err = fopen_s(&stream, "write.txt", "a+");
-			if (err != 0)
-				MessageBox(hwnd, TEXT("UNABLE TO OPEN FILE"), TEXT("ERROR!!"), MB_OK);
-			else
-				fprintf_s(stream, "%s", str);
-
-			fclose(stream);
+			if (subject == -1)
+			{
+				MessageBox(hwnd, TEXT("Data Already Present !!"), TEXT("STOP"), MB_OK);
+				//EndDialog(hwnd, wParam);
+				//return TRUE;
+			}
+			else if (subject == 1)
+			{
+				// physics part
+				err = fopen_s(&stream, "physics.txt", "a+");
+				if (err != 0)
+					MessageBox(hwnd, TEXT("UNABLE TO OPEN FILE"), TEXT("ERROR!!"), MB_OK);
+				else
+				{
+					switch (planat)
+					{
+					case 1: wsprintf(sstr,"SUN");
+						break;
+					case 2:wsprintf(sstr, "JUPITOR");
+						break;
+					case 3:wsprintf(sstr, "NAPTUNE");
+						break;
+					case 4:wsprintf(sstr, "SATURN");
+						break;
+					case 5:wsprintf(sstr, "EARTH");
+						break;
+					case 6:wsprintf(sstr, "URANIUS");
+						break;
+					case 7:wsprintf(sstr, "VENUS");
+						break;
+					case 8:wsprintf(sstr, "MARS");
+						break;
+					case 9:wsprintf(sstr, "MERCURY");
+						break;
+					case 10:wsprintf(sstr, "MOON");
+						break;
+					case 11:wsprintf(sstr, "PLUTO");
+						break;
+					default:
+						break;
+					}
+					fprintf_s(stream, "planate : %s \n Gravitation : %f \n Weight : %f \n Result : %f ", sstr,g,ww,r);
+				}
+				
+				fclose(stream);
+			}
+			else if (subject == 2)
+			{
+				// chemistry
+				err = fopen_s(&stream, "Chemistry.txt", "a+");
+				if (err != 0)
+					MessageBox(hwnd, TEXT("UNABLE TO OPEN FILE"), TEXT("ERROR!!"), MB_OK);
+				else
+				{
+					if(iChemMode == 1)
+						fprintf_s(stream, "Q1 : %f \n Q2 : %f \n Eff : %f \n Work Done : %f ",cv1,cv2,cv3,cv4);
+					else if(iChemMode == 2)
+						fprintf_s(stream, "Q1 : %f \n W : %f \n Q2 : %f \n C.O.P. : %f ", cv1, cv2, cv3, cv4);
+					else if(iChemMode == 3)
+						fprintf_s(stream, "Q2 : %f \n W : %f \n Q1 : %f \n C.O.P. : %f ", cv1, cv2, cv3, cv4);
+				}
+				fclose(stream);
+			}
+			else if (subject == 3)
+			{
+				// maths
+				err = fopen_s(&stream, "Maths.txt", "a+");
+				if (err != 0)
+					MessageBox(hwnd, TEXT("UNABLE TO OPEN FILE"), TEXT("ERROR!!"), MB_OK);
+				else
+				{
+					if (iMathMode == 1)
+						fprintf_s(stream, "x1: %f \nx2: %f \nx3: %f \ny1: %f \ny2: %f \ny3: %f \nType: %s \n", mx1, mx2, mx3, mx4, mx5, mx6, str);
+					else if (iMathMode == 2)
+						fprintf_s(stream, "a: %f \nb: %f \nc: %f\n Type: %s ", mx7,mx8,mx9,str);
+				}
+				fclose(stream);
+			}
 			EndDialog(hwnd, wParam);
 			return TRUE;
 #pragma endregion
@@ -932,12 +1233,10 @@ BOOL CALLBACK MyDlgProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM lParam)
 			return TRUE;
 #pragma endregion
 		
-		}
+		} 
 	}
 	return FALSE;
 }
-
-
 
 #pragma region CLEAR
 void ClearPhysics(HWND hwnd)

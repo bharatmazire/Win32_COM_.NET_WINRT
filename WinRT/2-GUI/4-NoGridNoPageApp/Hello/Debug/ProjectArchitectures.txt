@@ -1,0 +1,1 @@
+C:\MyVisualStudio2017Projects\01-Win32\01-Window\IDE\bharat_mazire_win32_assignments\WinRT\2-GUI\1-IDE\Hello\Hello.vcxproj;x86

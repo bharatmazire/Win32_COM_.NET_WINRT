@@ -1,0 +1,133 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Machine>DESKTOP-PMRBIU7</Machine>
+    <WindowsUser>Bharat</WindowsUser>
+    <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
+    <TargetOsVersion>10.0</TargetOsVersion>
+    <TargetOsDescription>Windows 10.0</TargetOsDescription>
+    <SolutionConfiguration>Debug|Win32</SolutionConfiguration>
+    <PackageArchitecture>x86</PackageArchitecture>
+    <PackageIdentityName>26101cf4-6e1e-4a4a-aa0e-d38953da582d</PackageIdentityName>
+    <PackageIdentityPublisher>CN=Bharat</PackageIdentityPublisher>
+    <IntermediateOutputPath>C:\MyVisualStudio2017Projects\01-Win32\01-Window\IDE\bharat_mazire_win32_assignments\WinRT\2-GUI\1-IDE\Hello\Debug\</IntermediateOutputPath>
+    <RemoteDeploymentType>CopyToDevice</RemoteDeploymentType>
+    <PackageRegistrationPath>
+    </PackageRegistrationPath>
+    <RemoveNonLayoutFiles>false</RemoveNonLayoutFiles>
+    <DeployOptionalPackages>false</DeployOptionalPackages>
+    <WindowsSdkPath>C:\Program Files %28x86%29\Windows Kits\10\</WindowsSdkPath>
+    <LayoutDir>C:\MyVisualStudio2017Projects\01-Win32\01-Window\IDE\bharat_mazire_win32_assignments\WinRT\2-GUI\1-IDE\Hello\Debug\Hello\AppX</LayoutDir>
+    <RegisteredManifestChecksum>3C1FEDAA08D18B1107DFA404C38A38CDC20B1D952C9FCCCFA1EF001D4DCECDD9</RegisteredManifestChecksum>
+    <RegisteredPackageMoniker>26101cf4-6e1e-4a4a-aa0e-d38953da582d_1.0.0.0_x86__nh48fvafy05dp</RegisteredPackageMoniker>
+    <RegisteredUserModeAppID>26101cf4-6e1e-4a4a-aa0e-d38953da582d_nh48fvafy05dp!App</RegisteredUserModeAppID>
+    <RegisteredPackageID>26101cf4-6e1e-4a4a-aa0e-d38953da582d</RegisteredPackageID>
+    <RegisteredPackagePublisher>CN=Bharat</RegisteredPackagePublisher>
+    <RegisteredVersion>1.0.0.0</RegisteredVersion>
+  </PropertyGroup>
+  <ItemGroup>
+    <AppXManifest Include="C:\MyVisualStudio2017Projects\01-Win32\01-Window\IDE\bharat_mazire_win32_assignments\WinRT\2-GUI\1-IDE\Hello\Debug\Hello\AppxManifest.xml">
+      <PackagePath>AppxManifest.xml</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+      <Modified>2018-12-05T14:32:42.993</Modified>
+    </AppXManifest>
+  </ItemGroup>
+  <ItemGroup>
+    <AppxPackagedFile Include="C:\MyVisualStudio2017Projects\01-Win32\01-Window\IDE\bharat_mazire_win32_assignments\WinRT\2-GUI\1-IDE\Hello\Debug\Hello\Hello.exe">
+      <PackagePath>Hello.exe</PackagePath>
+      <Modified>2018-12-05T14:32:39.678</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\MyVisualStudio2017Projects\01-Win32\01-Window\IDE\bharat_mazire_win32_assignments\WinRT\2-GUI\1-IDE\Hello\Debug\Hello\Hello.winmd">
+      <PackagePath>Hello.winmd</PackagePath>
+      <Modified>2018-12-05T14:32:35.154</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\MyVisualStudio2017Projects\01-Win32\01-Window\IDE\bharat_mazire_win32_assignments\WinRT\2-GUI\1-IDE\Hello\Assets\LockScreenLogo.scale-200.png">
+      <PackagePath>Assets\LockScreenLogo.scale-200.png</PackagePath>
+      <Modified>2018-12-05T13:02:54.454</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\MyVisualStudio2017Projects\01-Win32\01-Window\IDE\bharat_mazire_win32_assignments\WinRT\2-GUI\1-IDE\Hello\Assets\SplashScreen.scale-200.png">
+      <PackagePath>Assets\SplashScreen.scale-200.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+      <Modified>2018-12-05T13:02:54.454</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\MyVisualStudio2017Projects\01-Win32\01-Window\IDE\bharat_mazire_win32_assignments\WinRT\2-GUI\1-IDE\Hello\Assets\Square150x150Logo.scale-200.png">
+      <PackagePath>Assets\Square150x150Logo.scale-200.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+      <Modified>2018-12-05T13:02:54.454</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\MyVisualStudio2017Projects\01-Win32\01-Window\IDE\bharat_mazire_win32_assignments\WinRT\2-GUI\1-IDE\Hello\Assets\Square44x44Logo.scale-200.png">
+      <PackagePath>Assets\Square44x44Logo.scale-200.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+      <Modified>2018-12-05T13:02:54.454</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\MyVisualStudio2017Projects\01-Win32\01-Window\IDE\bharat_mazire_win32_assignments\WinRT\2-GUI\1-IDE\Hello\Assets\Square44x44Logo.targetsize-24_altform-unplated.png">
+      <PackagePath>Assets\Square44x44Logo.targetsize-24_altform-unplated.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+      <Modified>2018-12-05T13:02:54.454</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\MyVisualStudio2017Projects\01-Win32\01-Window\IDE\bharat_mazire_win32_assignments\WinRT\2-GUI\1-IDE\Hello\Assets\StoreLogo.png">
+      <PackagePath>Assets\StoreLogo.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+      <Modified>2018-12-05T13:02:54.454</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\MyVisualStudio2017Projects\01-Win32\01-Window\IDE\bharat_mazire_win32_assignments\WinRT\2-GUI\1-IDE\Hello\Assets\Wide310x150Logo.scale-200.png">
+      <PackagePath>Assets\Wide310x150Logo.scale-200.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+      <Modified>2018-12-05T13:02:54.454</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\MyVisualStudio2017Projects\01-Win32\01-Window\IDE\bharat_mazire_win32_assignments\WinRT\2-GUI\1-IDE\Hello\Debug\Hello\App.xbf">
+      <PackagePath>App.xbf</PackagePath>
+      <Modified>2018-12-05T14:32:53.449</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\MyVisualStudio2017Projects\01-Win32\01-Window\IDE\bharat_mazire_win32_assignments\WinRT\2-GUI\1-IDE\Hello\Debug\Hello\MainPage.xbf">
+      <PackagePath>MainPage.xbf</PackagePath>
+      <Modified>2018-12-05T14:32:53.449</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Program Files %28x86%29\Microsoft SDKs\Windows Kits\10\ExtensionSDKs\Microsoft.UniversalCRT.Debug\10.0.17134.0\\redist\Debug\x86\ucrtbased.dll">
+      <PackagePath>ucrtbased.dll</PackagePath>
+      <Modified>2018-04-19T18:35:16.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\MyVisualStudio2017Projects\01-Win32\01-Window\IDE\bharat_mazire_win32_assignments\WinRT\2-GUI\1-IDE\Hello\Debug\Hello\resources.pri">
+      <PackagePath>resources.pri</PackagePath>
+      <Modified>2018-12-05T14:32:42.017</Modified>
+    </AppxPackagedFile>
+  </ItemGroup>
+  <ItemGroup>
+    <ResolvedSDKReference Include="C:\Program Files %28x86%29\Microsoft SDKs\Windows Kits\10\ExtensionSDKs\Microsoft.VCLibs\14.0\">
+      <Name>Microsoft.VCLibs.140.00.Debug</Name>
+      <Version>14.0.27023.1</Version>
+      <Architecture>ARM</Architecture>
+      <FrameworkIdentity>Name = Microsoft.VCLibs.140.00.Debug, MinVersion = 14.0.27023.1, Publisher = %27CN=Microsoft Corporation, O=Microsoft Corporation, L=Redmond, S=Washington, C=US%27</FrameworkIdentity>
+      <AppxLocation>C:\Program Files %28x86%29\Microsoft SDKs\Windows Kits\10\ExtensionSDKs\Microsoft.VCLibs\14.0\.\AppX\Debug\ARM\Microsoft.VCLibs.ARM.Debug.14.00.appx</AppxLocation>
+      <MoreInfo>
+      </MoreInfo>
+    </ResolvedSDKReference>
+    <ResolvedSDKReference Include="C:\Program Files %28x86%29\Microsoft SDKs\Windows Kits\10\ExtensionSDKs\Microsoft.VCLibs\14.0\">
+      <Name>Microsoft.VCLibs.140.00.Debug</Name>
+      <Version>14.0.27023.1</Version>
+      <Architecture>ARM64</Architecture>
+      <FrameworkIdentity>Name = Microsoft.VCLibs.140.00.Debug, MinVersion = 14.0.27023.1, Publisher = %27CN=Microsoft Corporation, O=Microsoft Corporation, L=Redmond, S=Washington, C=US%27</FrameworkIdentity>
+      <AppxLocation>C:\Program Files %28x86%29\Microsoft SDKs\Windows Kits\10\ExtensionSDKs\Microsoft.VCLibs\14.0\.\AppX\Debug\ARM64\Microsoft.VCLibs.ARM64.Debug.14.00.appx</AppxLocation>
+      <MoreInfo>
+      </MoreInfo>
+    </ResolvedSDKReference>
+    <ResolvedSDKReference Include="C:\Program Files %28x86%29\Microsoft SDKs\Windows Kits\10\ExtensionSDKs\Microsoft.VCLibs\14.0\">
+      <Name>Microsoft.VCLibs.140.00.Debug</Name>
+      <Version>14.0.27023.1</Version>
+      <Architecture>x64</Architecture>
+      <FrameworkIdentity>Name = Microsoft.VCLibs.140.00.Debug, MinVersion = 14.0.27023.1, Publisher = %27CN=Microsoft Corporation, O=Microsoft Corporation, L=Redmond, S=Washington, C=US%27</FrameworkIdentity>
+      <AppxLocation>C:\Program Files %28x86%29\Microsoft SDKs\Windows Kits\10\ExtensionSDKs\Microsoft.VCLibs\14.0\.\AppX\Debug\x64\Microsoft.VCLibs.x64.Debug.14.00.appx</AppxLocation>
+      <MoreInfo>
+      </MoreInfo>
+    </ResolvedSDKReference>
+    <ResolvedSDKReference Include="C:\Program Files %28x86%29\Microsoft SDKs\Windows Kits\10\ExtensionSDKs\Microsoft.VCLibs\14.0\">
+      <Name>Microsoft.VCLibs.140.00.Debug</Name>
+      <Version>14.0.27023.1</Version>
+      <Architecture>x86</Architecture>
+      <FrameworkIdentity>Name = Microsoft.VCLibs.140.00.Debug, MinVersion = 14.0.27023.1, Publisher = %27CN=Microsoft Corporation, O=Microsoft Corporation, L=Redmond, S=Washington, C=US%27</FrameworkIdentity>
+      <AppxLocation>C:\Program Files %28x86%29\Microsoft SDKs\Windows Kits\10\ExtensionSDKs\Microsoft.VCLibs\14.0\.\AppX\Debug\x86\Microsoft.VCLibs.x86.Debug.14.00.appx</AppxLocation>
+      <MoreInfo>
+      </MoreInfo>
+    </ResolvedSDKReference>
+  </ItemGroup>
+</Project>
