@@ -8,88 +8,80 @@
     <TargetOsDescription>Windows 10.0</TargetOsDescription>
     <SolutionConfiguration>Debug|Win32</SolutionConfiguration>
     <PackageArchitecture>x86</PackageArchitecture>
-    <PackageIdentityName>26101cf4-6e1e-4a4a-aa0e-d38953da582d</PackageIdentityName>
+    <PackageIdentityName>4ee4b803-7955-4da8-8af3-bc2f5d339f20</PackageIdentityName>
     <PackageIdentityPublisher>CN=Bharat</PackageIdentityPublisher>
-    <IntermediateOutputPath>C:\MyVisualStudio2017Projects\01-Win32\01-Window\IDE\bharat_mazire_win32_assignments\WinRT\2-GUI\1-IDE\Hello\Debug\</IntermediateOutputPath>
+    <IntermediateOutputPath>C:\MyVisualStudio2017Projects\01-Win32\01-Window\IDE\bharat_mazire_win32_assignments\WinRT\2-GUI\4-NoGridNoPageApp\Hello\Debug\</IntermediateOutputPath>
     <RemoteDeploymentType>CopyToDevice</RemoteDeploymentType>
     <PackageRegistrationPath>
     </PackageRegistrationPath>
     <RemoveNonLayoutFiles>false</RemoveNonLayoutFiles>
     <DeployOptionalPackages>false</DeployOptionalPackages>
     <WindowsSdkPath>C:\Program Files %28x86%29\Windows Kits\10\</WindowsSdkPath>
-    <LayoutDir>C:\MyVisualStudio2017Projects\01-Win32\01-Window\IDE\bharat_mazire_win32_assignments\WinRT\2-GUI\1-IDE\Hello\Debug\Hello\AppX</LayoutDir>
-    <RegisteredManifestChecksum>3C1FEDAA08D18B1107DFA404C38A38CDC20B1D952C9FCCCFA1EF001D4DCECDD9</RegisteredManifestChecksum>
-    <RegisteredPackageMoniker>26101cf4-6e1e-4a4a-aa0e-d38953da582d_1.0.0.0_x86__nh48fvafy05dp</RegisteredPackageMoniker>
-    <RegisteredUserModeAppID>26101cf4-6e1e-4a4a-aa0e-d38953da582d_nh48fvafy05dp!App</RegisteredUserModeAppID>
-    <RegisteredPackageID>26101cf4-6e1e-4a4a-aa0e-d38953da582d</RegisteredPackageID>
+    <LayoutDir>C:\MyVisualStudio2017Projects\01-Win32\01-Window\IDE\bharat_mazire_win32_assignments\WinRT\2-GUI\4-NoGridNoPageApp\Hello\Debug\Hello\AppX</LayoutDir>
+    <RegisteredManifestChecksum>93DA2D546AB604B23E3C76F26338DD58F6C28FC339DB40C1DD5586AC1B7AD0F3</RegisteredManifestChecksum>
+    <RegisteredPackageMoniker>4ee4b803-7955-4da8-8af3-bc2f5d339f20_1.0.0.0_x86__nh48fvafy05dp</RegisteredPackageMoniker>
+    <RegisteredUserModeAppID>4ee4b803-7955-4da8-8af3-bc2f5d339f20_nh48fvafy05dp!Hello</RegisteredUserModeAppID>
+    <RegisteredPackageID>4ee4b803-7955-4da8-8af3-bc2f5d339f20</RegisteredPackageID>
     <RegisteredPackagePublisher>CN=Bharat</RegisteredPackagePublisher>
     <RegisteredVersion>1.0.0.0</RegisteredVersion>
   </PropertyGroup>
   <ItemGroup>
-    <AppXManifest Include="C:\MyVisualStudio2017Projects\01-Win32\01-Window\IDE\bharat_mazire_win32_assignments\WinRT\2-GUI\1-IDE\Hello\Debug\Hello\AppxManifest.xml">
+    <AppXManifest Include="C:\MyVisualStudio2017Projects\01-Win32\01-Window\IDE\bharat_mazire_win32_assignments\WinRT\2-GUI\4-NoGridNoPageApp\Hello\Debug\Hello\AppxManifest.xml">
       <PackagePath>AppxManifest.xml</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
-      <Modified>2018-12-05T14:32:42.993</Modified>
+      <Modified>2018-12-19T11:32:24.225</Modified>
     </AppXManifest>
   </ItemGroup>
   <ItemGroup>
-    <AppxPackagedFile Include="C:\MyVisualStudio2017Projects\01-Win32\01-Window\IDE\bharat_mazire_win32_assignments\WinRT\2-GUI\1-IDE\Hello\Debug\Hello\Hello.exe">
+    <AppxPackagedFile Include="C:\MyVisualStudio2017Projects\01-Win32\01-Window\IDE\bharat_mazire_win32_assignments\WinRT\2-GUI\4-NoGridNoPageApp\Hello\Debug\Hello\Hello.exe">
       <PackagePath>Hello.exe</PackagePath>
-      <Modified>2018-12-05T14:32:39.678</Modified>
+      <Modified>2018-12-19T11:32:23.464</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\MyVisualStudio2017Projects\01-Win32\01-Window\IDE\bharat_mazire_win32_assignments\WinRT\2-GUI\1-IDE\Hello\Debug\Hello\Hello.winmd">
+    <AppxPackagedFile Include="C:\MyVisualStudio2017Projects\01-Win32\01-Window\IDE\bharat_mazire_win32_assignments\WinRT\2-GUI\4-NoGridNoPageApp\Hello\Debug\Hello\Hello.winmd">
       <PackagePath>Hello.winmd</PackagePath>
-      <Modified>2018-12-05T14:32:35.154</Modified>
+      <Modified>2018-12-19T11:32:23.263</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\MyVisualStudio2017Projects\01-Win32\01-Window\IDE\bharat_mazire_win32_assignments\WinRT\2-GUI\1-IDE\Hello\Assets\LockScreenLogo.scale-200.png">
+    <AppxPackagedFile Include="C:\MyVisualStudio2017Projects\01-Win32\01-Window\IDE\bharat_mazire_win32_assignments\WinRT\2-GUI\4-NoGridNoPageApp\Hello\Assets\LockScreenLogo.scale-200.png">
       <PackagePath>Assets\LockScreenLogo.scale-200.png</PackagePath>
       <Modified>2018-12-05T13:02:54.454</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\MyVisualStudio2017Projects\01-Win32\01-Window\IDE\bharat_mazire_win32_assignments\WinRT\2-GUI\1-IDE\Hello\Assets\SplashScreen.scale-200.png">
+    <AppxPackagedFile Include="C:\MyVisualStudio2017Projects\01-Win32\01-Window\IDE\bharat_mazire_win32_assignments\WinRT\2-GUI\4-NoGridNoPageApp\Hello\Assets\SplashScreen.scale-200.png">
       <PackagePath>Assets\SplashScreen.scale-200.png</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
       <Modified>2018-12-05T13:02:54.454</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\MyVisualStudio2017Projects\01-Win32\01-Window\IDE\bharat_mazire_win32_assignments\WinRT\2-GUI\1-IDE\Hello\Assets\Square150x150Logo.scale-200.png">
+    <AppxPackagedFile Include="C:\MyVisualStudio2017Projects\01-Win32\01-Window\IDE\bharat_mazire_win32_assignments\WinRT\2-GUI\4-NoGridNoPageApp\Hello\Assets\Square150x150Logo.scale-200.png">
       <PackagePath>Assets\Square150x150Logo.scale-200.png</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
       <Modified>2018-12-05T13:02:54.454</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\MyVisualStudio2017Projects\01-Win32\01-Window\IDE\bharat_mazire_win32_assignments\WinRT\2-GUI\1-IDE\Hello\Assets\Square44x44Logo.scale-200.png">
+    <AppxPackagedFile Include="C:\MyVisualStudio2017Projects\01-Win32\01-Window\IDE\bharat_mazire_win32_assignments\WinRT\2-GUI\4-NoGridNoPageApp\Hello\Assets\Square44x44Logo.scale-200.png">
       <PackagePath>Assets\Square44x44Logo.scale-200.png</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
       <Modified>2018-12-05T13:02:54.454</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\MyVisualStudio2017Projects\01-Win32\01-Window\IDE\bharat_mazire_win32_assignments\WinRT\2-GUI\1-IDE\Hello\Assets\Square44x44Logo.targetsize-24_altform-unplated.png">
+    <AppxPackagedFile Include="C:\MyVisualStudio2017Projects\01-Win32\01-Window\IDE\bharat_mazire_win32_assignments\WinRT\2-GUI\4-NoGridNoPageApp\Hello\Assets\Square44x44Logo.targetsize-24_altform-unplated.png">
       <PackagePath>Assets\Square44x44Logo.targetsize-24_altform-unplated.png</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
       <Modified>2018-12-05T13:02:54.454</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\MyVisualStudio2017Projects\01-Win32\01-Window\IDE\bharat_mazire_win32_assignments\WinRT\2-GUI\1-IDE\Hello\Assets\StoreLogo.png">
+    <AppxPackagedFile Include="C:\MyVisualStudio2017Projects\01-Win32\01-Window\IDE\bharat_mazire_win32_assignments\WinRT\2-GUI\4-NoGridNoPageApp\Hello\Assets\StoreLogo.png">
       <PackagePath>Assets\StoreLogo.png</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
       <Modified>2018-12-05T13:02:54.454</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\MyVisualStudio2017Projects\01-Win32\01-Window\IDE\bharat_mazire_win32_assignments\WinRT\2-GUI\1-IDE\Hello\Assets\Wide310x150Logo.scale-200.png">
+    <AppxPackagedFile Include="C:\MyVisualStudio2017Projects\01-Win32\01-Window\IDE\bharat_mazire_win32_assignments\WinRT\2-GUI\4-NoGridNoPageApp\Hello\Assets\Wide310x150Logo.scale-200.png">
       <PackagePath>Assets\Wide310x150Logo.scale-200.png</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
       <Modified>2018-12-05T13:02:54.454</Modified>
-    </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\MyVisualStudio2017Projects\01-Win32\01-Window\IDE\bharat_mazire_win32_assignments\WinRT\2-GUI\1-IDE\Hello\Debug\Hello\App.xbf">
-      <PackagePath>App.xbf</PackagePath>
-      <Modified>2018-12-05T14:32:53.449</Modified>
-    </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\MyVisualStudio2017Projects\01-Win32\01-Window\IDE\bharat_mazire_win32_assignments\WinRT\2-GUI\1-IDE\Hello\Debug\Hello\MainPage.xbf">
-      <PackagePath>MainPage.xbf</PackagePath>
-      <Modified>2018-12-05T14:32:53.449</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Program Files %28x86%29\Microsoft SDKs\Windows Kits\10\ExtensionSDKs\Microsoft.UniversalCRT.Debug\10.0.17134.0\\redist\Debug\x86\ucrtbased.dll">
       <PackagePath>ucrtbased.dll</PackagePath>
       <Modified>2018-04-19T18:35:16.000</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\MyVisualStudio2017Projects\01-Win32\01-Window\IDE\bharat_mazire_win32_assignments\WinRT\2-GUI\1-IDE\Hello\Debug\Hello\resources.pri">
+    <AppxPackagedFile Include="C:\MyVisualStudio2017Projects\01-Win32\01-Window\IDE\bharat_mazire_win32_assignments\WinRT\2-GUI\4-NoGridNoPageApp\Hello\Debug\Hello\resources.pri">
       <PackagePath>resources.pri</PackagePath>
-      <Modified>2018-12-05T14:32:42.017</Modified>
+      <Modified>2018-12-19T11:32:24.085</Modified>
     </AppxPackagedFile>
   </ItemGroup>
   <ItemGroup>

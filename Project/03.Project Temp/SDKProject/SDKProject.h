@@ -100,3 +100,8 @@
 #define ID_RBBIO1 164
 #define ID_RBBIO2 165
 
+#define ID_ETMASS 178
+
+#define MY_ICON 180
+
+

@@ -48,8 +48,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmdLi
 	wndclass.cbWndExtra = 0;
 	wndclass.hbrBackground = (HBRUSH)GetStockObject(BLACK_BRUSH);
 	wndclass.hCursor = LoadCursor(NULL, IDC_ARROW);
-	wndclass.hIcon = LoadIcon(NULL, IDI_APPLICATION);
-	wndclass.hIconSm = LoadIcon(NULL, IDI_APPLICATION);
+	wndclass.hIcon = LoadIcon(hInstance, MAKEINTRESOURCE(MY_ICON));
+	wndclass.hIconSm = LoadIcon(hInstance, MAKEINTRESOURCE(MY_ICON));
 	wndclass.hInstance = hInstance;
 	wndclass.lpfnWndProc = WndProc;
 	wndclass.lpszClassName = szAppName;
@@ -62,7 +62,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmdLi
 		return 0;
 	}
 
-	hwnd = CreateWindow(szAppName, TEXT("SDK Educational Project"), WS_OVERLAPPEDWINDOW, CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT, NULL, NULL, hInstance, NULL);
+	hwnd = CreateWindow(szAppName, TEXT("WM_GESTURE"), WS_OVERLAPPEDWINDOW, CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT, NULL, NULL, hInstance, NULL);
 
 	ShowWindow(hwnd, SW_MAXIMIZE);
 	UpdateWindow(hwnd);
@@ -78,7 +78,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmdLi
 LRESULT CALLBACK WndProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM lParam)
 {
 	static	HBITMAP	hBitMap;
-	HDC			hdc, hdc1;
+	HDC			hdc, hdc1,hdc_old;
 	PAINTSTRUCT ps;
 	RECT		rc;
 	BITMAP		bmp;
@@ -128,6 +128,7 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM lParam)
 #pragma region WM_PAINT
 	case WM_PAINT:
 		hdc = BeginPaint(hwnd, &ps);
+		hdc_old = hdc;
 		GetClientRect(hwnd, &rc);
 		hdc1 = CreateCompatibleDC(hdc);
 
@@ -139,15 +140,30 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM lParam)
 
 		if (siInitialMessage == 0)
 		{
-			hFont = CreateFont(40, 0, 0, 0, FW_THIN, TRUE, FALSE, FALSE, DEFAULT_CHARSET, OUT_OUTLINE_PRECIS,
-				CLIP_DEFAULT_PRECIS, CLEARTYPE_QUALITY, VARIABLE_PITCH, TEXT("Arial"));
+			hFont = CreateFont(35, 0, 0, 0, FW_LIGHT, TRUE, FALSE, FALSE, DEFAULT_CHARSET, OUT_OUTLINE_PRECIS,
+				CLIP_DEFAULT_PRECIS, CLEARTYPE_QUALITY, FF_DECORATIVE, TEXT("Old English"));
 
 			SelectObject(hdc, hFont);
 
 			SetBkMode(hdc, TRANSPARENT);
-			SetTextColor(hdc, RGB(255, 255, 255));
-			DrawText(hdc, TEXT("\n\n\n\n\n\n\n\n\n\n\n\n\n... PRESS SPACEBAR TO CONTINUE ..."), -1, &rc, DT_CENTER);
+			SetTextColor(hdc, RGB(192,192,192));
+			DrawText(hdc, TEXT("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nPRESS SPACEBAR TO CONTINUE"), -1, &rc, DT_CENTER);
+			
+			
 			DeleteObject(hFont);
+			hFont = CreateFont(35, 0, 0, 0, FW_LIGHT, TRUE, FALSE, FALSE, DEFAULT_CHARSET, OUT_OUTLINE_PRECIS,
+				CLIP_DEFAULT_PRECIS, CLEARTYPE_QUALITY, FF_MODERN, TEXT("Courier New"));
+
+			SelectObject(hdc, hFont);
+			SetTextColor(hdc, RGB(255, 215, 0));
+			SetBkColor(hdc, RGB(211,211,211));
+			DrawText(hdc, TEXT("\n\n.  BATCH : \n Win32 SDK 2018"), -1, &rc, DT_LEFT);
+		
+			SetTextColor(hdc, RGB(255, 215, 0));
+			SetBkColor(hdc, RGB(211, 211, 211));
+			DrawText(hdc, TEXT("\n\n\n BHARAT S. MAZIRE  ."), -1, &rc, DT_RIGHT);
+		
+		
 		}
 
 		DeleteDC(hdc1);
@@ -202,7 +218,7 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM lParam)
 BOOL CALLBACK MyDlgProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM lParam)
 {
 	static int subject;
-	static CHAR str[20],str2[20],sstr[200];
+	static CHAR str[20],str2[20],sstr[200],smass[20];
 	int err;
 	// physics
 	static int planat = 0;
@@ -282,7 +298,10 @@ BOOL CALLBACK MyDlgProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM lParam)
 		ResetMaths(hwnd);
 		ResetChemistry(hwnd);
 		ResetBiology(hwnd);
-		
+		SetDlgItemText(hwnd, ID_CHEMPOS1, "Enter Q1 : ");
+		SetDlgItemText(hwnd, ID_CHEMPOS2, "Enter Q2 : ");
+		SetDlgItemText(hwnd, ID_CHEMPOS3, "Effeciency : ");
+		SetDlgItemText(hwnd, ID_CHEMPOS4, "Work Done : ");
 		// maths button disable
 		EnableWindow(GetDlgItem(hwnd, IDCLEAR_MATH), FALSE);
 		EnableWindow(GetDlgItem(hwnd, IDCOMPUTE_MATH), FALSE);
@@ -358,13 +377,14 @@ BOOL CALLBACK MyDlgProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM lParam)
 			}
 
 			StringCbPrintfA(str, 20, "%f", dResult);
-
+			StringCbPrintfA(smass, 20, "%f", dMass);
 			
 
 			
-			
+			SetDlgItemText(hwnd, ID_ETMASS, smass);
 			SetDlgItemText(hwnd, ID_ETGRAVITY, str2);
 			SetDlgItemText(hwnd, ID_ETWEIGHT2, str);
+
 			break;
 
 		case ID_RBSUN:
@@ -390,7 +410,11 @@ BOOL CALLBACK MyDlgProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM lParam)
 				}
 
 				StringCbPrintfA(str, 20, "%f", dResult);
-				
+				StringCbPrintfA(smass, 20, "%f", dMass);
+
+
+
+				SetDlgItemText(hwnd, ID_ETMASS, smass);
 				
 				
 				SetDlgItemText(hwnd, ID_ETGRAVITY, "274");
@@ -423,7 +447,11 @@ BOOL CALLBACK MyDlgProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM lParam)
 
 				StringCbPrintfA(str, 20, "%f", dResult);
 
+				StringCbPrintfA(smass, 20, "%f", dMass);
 
+
+
+				SetDlgItemText(hwnd, ID_ETMASS, smass);
 
 				SetDlgItemText(hwnd, ID_ETGRAVITY, "24.92");
 				SetDlgItemText(hwnd, ID_ETWEIGHT2, str);
@@ -453,7 +481,11 @@ BOOL CALLBACK MyDlgProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM lParam)
 				}
 
 				StringCbPrintfA(str, 20, "%f", dResult);
+				StringCbPrintfA(smass, 20, "%f", dMass);
 
+
+
+				SetDlgItemText(hwnd, ID_ETMASS, smass);
 				SetDlgItemText(hwnd, ID_ETGRAVITY, "11.15");
 				SetDlgItemText(hwnd, ID_ETWEIGHT2, str);
 				
@@ -483,7 +515,11 @@ BOOL CALLBACK MyDlgProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM lParam)
 				}
 
 				StringCbPrintfA(str, 20, "%f", dResult);
+				StringCbPrintfA(smass, 20, "%f", dMass);
 
+
+
+				SetDlgItemText(hwnd, ID_ETMASS, smass);
 
 				SetDlgItemText(hwnd, ID_ETGRAVITY, "10.44");
 				SetDlgItemText(hwnd, ID_ETWEIGHT2, str);
@@ -513,7 +549,11 @@ BOOL CALLBACK MyDlgProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM lParam)
 				}
 				
 				StringCbPrintfA(str, 20, "%f", dResult);
+				StringCbPrintfA(smass, 20, "%f", dMass);
 
+
+
+				SetDlgItemText(hwnd, ID_ETMASS, smass);
 				
 
 				SetDlgItemText(hwnd, ID_ETGRAVITY, "9.798");
@@ -545,7 +585,11 @@ BOOL CALLBACK MyDlgProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM lParam)
 
 
 				StringCbPrintfA(str, 20, "%f", dResult);
+				StringCbPrintfA(smass, 20, "%f", dMass);
 
+
+
+				SetDlgItemText(hwnd, ID_ETMASS, smass);
 				
 
 				SetDlgItemText(hwnd, ID_ETGRAVITY, "8.87");
@@ -576,7 +620,11 @@ BOOL CALLBACK MyDlgProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM lParam)
 				}
 
 				StringCbPrintfA(str, 20, "%f", dResult);
+				StringCbPrintfA(smass, 20, "%f", dMass);
 
+
+
+				SetDlgItemText(hwnd, ID_ETMASS, smass);
 				
 
 				SetDlgItemText(hwnd, ID_ETGRAVITY, "8.87");
@@ -608,7 +656,11 @@ BOOL CALLBACK MyDlgProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM lParam)
 				}
 
 				StringCbPrintfA(str, 20, "%f", dResult);
+				StringCbPrintfA(smass, 20, "%f", dMass);
 
+
+
+				SetDlgItemText(hwnd, ID_ETMASS, smass);
 				
 
 				SetDlgItemText(hwnd, ID_ETGRAVITY, "3.71");
@@ -639,7 +691,11 @@ BOOL CALLBACK MyDlgProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM lParam)
 				}
 
 				StringCbPrintfA(str, 20, "%f", dResult);
+				StringCbPrintfA(smass, 20, "%f", dMass);
 
+
+
+				SetDlgItemText(hwnd, ID_ETMASS, smass);
 				
 
 				SetDlgItemText(hwnd, ID_ETGRAVITY, "3.7");
@@ -670,7 +726,11 @@ BOOL CALLBACK MyDlgProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM lParam)
 				}
 
 				StringCbPrintfA(str, 20, "%f", dResult);
+				StringCbPrintfA(smass, 20, "%f", dMass);
 
+
+
+				SetDlgItemText(hwnd, ID_ETMASS, smass);
 				
 
 				SetDlgItemText(hwnd, ID_ETGRAVITY, "1.68");
@@ -701,7 +761,11 @@ BOOL CALLBACK MyDlgProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM lParam)
 				}
 
 				StringCbPrintfA(str, 20, "%f", dResult);
+				StringCbPrintfA(smass, 20, "%f", dMass);
 
+
+
+				SetDlgItemText(hwnd, ID_ETMASS, smass);
 				
 
 				SetDlgItemText(hwnd, ID_ETGRAVITY, "0.58");
@@ -727,6 +791,7 @@ BOOL CALLBACK MyDlgProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM lParam)
 				ClearPhysics(hwnd);
 				ResetPhysics(hwnd);
 				ResetMaths(hwnd);
+				ClearMaths(hwnd);
 				ResetBiology(hwnd);
 				EnableWindow(GetDlgItem(hwnd, ID_ETCHEM), TRUE);
 				EnableWindow(GetDlgItem(hwnd, ID_CHEMBTHEAT), TRUE);
@@ -741,6 +806,7 @@ BOOL CALLBACK MyDlgProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM lParam)
 				EnableWindow(GetDlgItem(hwnd, ID_CHEMET3), TRUE);
 				EnableWindow(GetDlgItem(hwnd, ID_CHEMET4), TRUE);
 				EnableWindow(GetDlgItem(hwnd, ID_CHEMCOMPUTE), TRUE);
+
 
 				pfnChem = (pfnChemistryCalculation)GetProcAddress(hLibChem, "ChemistryCalculation");
 				if (pfnChem == NULL)
@@ -1048,7 +1114,7 @@ BOOL CALLBACK MyDlgProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM lParam)
 				GetDlgItemText(hwnd, ID_ETMATHC, c, 10);
 
 				pfnAngleOfTriangle(atof(a), atof(b), atof(c), &iTypeOfTriangle);
-				if (mx7 == atof(a) && mx8 == atof(b) && mx9 == atof(c))
+				if (mx7 == atof(a) && mx8 == atof(b) && mx9 == atof(c)) 
 					subject = -1;
 				else
 				{
@@ -1244,17 +1310,18 @@ void ClearPhysics(HWND hwnd)
 	SetDlgItemText(hwnd, ID_ETWEIGHT, "");
 	SetDlgItemText(hwnd, ID_ETGRAVITY, "");
 	SetDlgItemText(hwnd, ID_ETWEIGHT2, "");
+	SetDlgItemText(hwnd, ID_ETMASS, "");
 	//SetDlgItemText(hwnd, ID_RBEAR, 0);
 	//SetDlgItemInt(hwnd, ID_RBEAR, 0, 0);
 }
 void ClearChemistry(HWND hwnd)
 {
 	SetDlgItemText(hwnd, ID_ETCHEM, "");
-	SetDlgItemText(hwnd, ID_CHEMPOS1, "");
+	/*SetDlgItemText(hwnd, ID_CHEMPOS1, "");
 	SetDlgItemText(hwnd, ID_CHEMPOS2, "");
 	SetDlgItemText(hwnd, ID_CHEMPOS3, "");
 	SetDlgItemText(hwnd, ID_CHEMPOS4, "");
-	SetDlgItemText(hwnd, ID_CHEMET1, "");
+	*/SetDlgItemText(hwnd, ID_CHEMET1, "");
 	SetDlgItemText(hwnd, ID_CHEMET2 , "");
 	SetDlgItemText(hwnd, ID_CHEMET3, "");
 	SetDlgItemText(hwnd, ID_CHEMET4, "");
@@ -1286,6 +1353,7 @@ void ResetPhysics(HWND hwnd)
 	EnableWindow(GetDlgItem(hwnd, IDCLEAR_PHY), FALSE);
 	EnableWindow(GetDlgItem(hwnd, ID_ETGRAVITY), FALSE);
 	EnableWindow(GetDlgItem(hwnd, ID_ETWEIGHT), FALSE);
+	EnableWindow(GetDlgItem(hwnd, ID_ETMASS), FALSE);
 
 	EnableWindow(GetDlgItem(hwnd, ID_RBSUN), FALSE);
 	EnableWindow(GetDlgItem(hwnd, ID_RBJUP), FALSE);
@@ -1306,11 +1374,11 @@ void ResetChemistry(HWND hwnd)
 	EnableWindow(GetDlgItem(hwnd,ID_CHEMBTHEAT), FALSE);
 	EnableWindow(GetDlgItem(hwnd,ID_CHEMBTNREF), FALSE);
 	EnableWindow(GetDlgItem(hwnd,ID_CHEMBTAC  ), FALSE);
-	EnableWindow(GetDlgItem(hwnd,ID_CHEMPOS1  ), FALSE);
+	/*EnableWindow(GetDlgItem(hwnd,ID_CHEMPOS1  ), FALSE);
 	EnableWindow(GetDlgItem(hwnd,ID_CHEMPOS2  ), FALSE);
 	EnableWindow(GetDlgItem(hwnd,ID_CHEMPOS3  ), FALSE);
 	EnableWindow(GetDlgItem(hwnd,ID_CHEMPOS4  ), FALSE);
-	EnableWindow(GetDlgItem(hwnd,ID_CHEMET1   ), FALSE);
+	*/EnableWindow(GetDlgItem(hwnd,ID_CHEMET1   ), FALSE);
 	EnableWindow(GetDlgItem(hwnd,ID_CHEMET2	  ), FALSE);
 	EnableWindow(GetDlgItem(hwnd,ID_CHEMET3   ), FALSE);
 	EnableWindow(GetDlgItem(hwnd,ID_CHEMET4   ), FALSE);

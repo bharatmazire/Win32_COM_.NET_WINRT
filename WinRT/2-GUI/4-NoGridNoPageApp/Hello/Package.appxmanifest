@@ -7,14 +7,14 @@
   IgnorableNamespaces="uap mp">
 
   <Identity
-    Name="26101cf4-6e1e-4a4a-aa0e-d38953da582d"
+    Name="4ee4b803-7955-4da8-8af3-bc2f5d339f20"
     Publisher="CN=Bharat"
     Version="1.0.0.0" />
 
-  <mp:PhoneIdentity PhoneProductId="26101cf4-6e1e-4a4a-aa0e-d38953da582d" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
+  <mp:PhoneIdentity PhoneProductId="4ee4b803-7955-4da8-8af3-bc2f5d339f20" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
-    <DisplayName>Hello</DisplayName>
+    <DisplayName>Hello_NoApp</DisplayName>
     <PublisherDisplayName>Bharat</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
@@ -28,11 +28,11 @@
   </Resources>
 
   <Applications>
-    <Application Id="App"
+    <Application Id="Hello"
       Executable="$targetnametoken$.exe"
       EntryPoint="Hello.App">
       <uap:VisualElements
-        DisplayName="Hello"
+        DisplayName="Hello_NOAPP"
         Square150x150Logo="Assets\Square150x150Logo.png"
         Square44x44Logo="Assets\Square44x44Logo.png"
         Description="Hello"
