@@ -151,17 +151,17 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM lParam)
 			
 			
 			DeleteObject(hFont);
-			hFont = CreateFont(35, 0, 0, 0, FW_LIGHT, TRUE, FALSE, FALSE, DEFAULT_CHARSET, OUT_OUTLINE_PRECIS,
+			hFont = CreateFont(40, 0, 0, 0, FW_LIGHT, TRUE, FALSE, FALSE, DEFAULT_CHARSET, OUT_OUTLINE_PRECIS,
 				CLIP_DEFAULT_PRECIS, CLEARTYPE_QUALITY, FF_MODERN, TEXT("Courier New"));
 
 			SelectObject(hdc, hFont);
 			SetTextColor(hdc, RGB(255, 215, 0));
 			SetBkColor(hdc, RGB(211,211,211));
-			DrawText(hdc, TEXT("\n\n.  BATCH : \n Win32 SDK 2018"), -1, &rc, DT_LEFT);
+			DrawText(hdc, TEXT("\n\n.  BATCH : Win32 SDK 2018 \n.  NAME : BHARAT S. MAZIRE"), -1, &rc, DT_LEFT);
 		
 			SetTextColor(hdc, RGB(255, 215, 0));
 			SetBkColor(hdc, RGB(211, 211, 211));
-			DrawText(hdc, TEXT("\n\n\n BHARAT S. MAZIRE  ."), -1, &rc, DT_RIGHT);
+			DrawText(hdc, TEXT("\n\n\n ASTROMEDICOMP  ."), -1, &rc, DT_RIGHT);
 		
 		
 		}
@@ -186,7 +186,7 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM lParam)
 				}
 				else
 				{
-					MessageBox(hwnd, TEXT("Dialog Box Creation Failed"), TEXT("ERROR"), MB_OK | MB_ICONERROR);
+					//MessageBox(hwnd, TEXT("Dialog Box Creation Failed"), TEXT("ERROR"), MB_OK | MB_ICONERROR);
 					DestroyWindow(hwnd);
 				}
 				InvalidateRect(hwnd, NULL, FALSE);
