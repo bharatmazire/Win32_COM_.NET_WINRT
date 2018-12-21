@@ -104,4 +104,8 @@
 
 #define MY_ICON 180
 
+#define U1 181
+#define U2 182
+#define U3 183
+#define U4 184
 

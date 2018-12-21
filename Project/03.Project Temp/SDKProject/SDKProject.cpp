@@ -138,8 +138,8 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM lParam)
 		SetStretchBltMode(hdc, HALFTONE);
 		StretchBlt(hdc, 0, 0, rc.right, rc.bottom, hdc1, 0, 0, bmp.bmWidth, bmp.bmHeight, SRCCOPY);
 
-		if (siInitialMessage == 0)
-		{
+		//if (siInitialMessage == 0)
+		//{
 			hFont = CreateFont(35, 0, 0, 0, FW_LIGHT, TRUE, FALSE, FALSE, DEFAULT_CHARSET, OUT_OUTLINE_PRECIS,
 				CLIP_DEFAULT_PRECIS, CLEARTYPE_QUALITY, FF_DECORATIVE, TEXT("Old English"));
 
@@ -147,7 +147,7 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM lParam)
 
 			SetBkMode(hdc, TRANSPARENT);
 			SetTextColor(hdc, RGB(192,192,192));
-			DrawText(hdc, TEXT("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nPRESS SPACEBAR TO CONTINUE"), -1, &rc, DT_CENTER);
+			DrawText(hdc, TEXT("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nPRESS 'SPACEBAR' TO CONTINUE\n &\n'ESC' TO CLOSE"), -1, &rc, DT_CENTER);
 			
 			
 			DeleteObject(hFont);
@@ -161,10 +161,10 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM lParam)
 		
 			SetTextColor(hdc, RGB(255, 215, 0));
 			SetBkColor(hdc, RGB(211, 211, 211));
-			DrawText(hdc, TEXT("\n\n\n ASTROMEDICOMP  ."), -1, &rc, DT_RIGHT);
+			DrawText(hdc, TEXT("\n\nWM_GESTURE  .\n ASTROMEDICOMP  ."), -1, &rc, DT_RIGHT);
 		
 		
-		}
+		//}
 
 		DeleteDC(hdc1);
 		EndPaint(hwnd, &ps);
@@ -176,10 +176,10 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM lParam)
 		switch (wParam)
 		{
 		case VK_SPACE:
-			if (siInitialSpace == 0)
-			{
-				siInitialMessage = 1;
-				siInitialSpace = 1;
+			//if (siInitialSpace == 0)
+			//{
+			//	siInitialMessage = 1;
+			//	siInitialSpace = 1;
 
 				if (DialogBox((HINSTANCE)GetWindowLong(hwnd, GWL_HINSTANCE), MAKEINTRESOURCE(DATAENTRY), hwnd, (DLGPROC)MyDlgProc) == IDOK)
 				{
@@ -187,16 +187,19 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM lParam)
 				else
 				{
 					//MessageBox(hwnd, TEXT("Dialog Box Creation Failed"), TEXT("ERROR"), MB_OK | MB_ICONERROR);
-					DestroyWindow(hwnd);
+					//DestroyWindow(hwnd);
 				}
 				InvalidateRect(hwnd, NULL, FALSE);
-			}
+			//}
 			//else
 			//{
 			//	siInitialMessage = 0;
 			//	siInitialSpace = 1;
 			//	InvalidateRect(hwnd, NULL, FALSE);
 			//}
+			break;
+		case VK_ESCAPE:
+			DestroyWindow(hwnd);
 			break;
 		}
 		break;
@@ -821,10 +824,15 @@ BOOL CALLBACK MyDlgProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM lParam)
 			switch (HIWORD(wParam))
 			{
 			case BN_CLICKED:
+				ClearChemistry(hwnd);
 				SetDlgItemText(hwnd, ID_CHEMPOS1, "Enter Q1 : ");
 				SetDlgItemText(hwnd, ID_CHEMPOS2, "Enter Q2 : ");
 				SetDlgItemText(hwnd, ID_CHEMPOS3, "Effeciency : ");
 				SetDlgItemText(hwnd, ID_CHEMPOS4, "Work Done : ");
+				SetDlgItemText(hwnd, U1, "J");
+				SetDlgItemText(hwnd, U2, "J");
+				SetDlgItemText(hwnd, U3, "%");
+				SetDlgItemText(hwnd, U4, "J");
 				iChemMode = 1;
 				break;
 			}
@@ -833,10 +841,16 @@ BOOL CALLBACK MyDlgProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM lParam)
 			switch (HIWORD(wParam))
 			{
 			case BN_CLICKED:
+				ClearChemistry(hwnd);
 				SetDlgItemText(hwnd, ID_CHEMPOS1, "Enter Q1 : ");
 				SetDlgItemText(hwnd, ID_CHEMPOS2, "Enter W : ");
 				SetDlgItemText(hwnd, ID_CHEMPOS3, "Q2 : ");
 				SetDlgItemText(hwnd, ID_CHEMPOS4, "C. O. P. : ");
+				SetDlgItemText(hwnd, U1, "J");
+				SetDlgItemText(hwnd, U2, "J");
+				SetDlgItemText(hwnd, U3, "J");
+				SetDlgItemText(hwnd, U4, "C");
+
 				iChemMode = 2;
 				break;
 			}
@@ -845,10 +859,16 @@ BOOL CALLBACK MyDlgProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM lParam)
 			switch (HIWORD(wParam))
 			{
 			case BN_CLICKED:
+				ClearChemistry(hwnd);
 				SetDlgItemText(hwnd, ID_CHEMPOS1, "Enter Q2 : ");
 				SetDlgItemText(hwnd, ID_CHEMPOS2, "Enter W : ");
 				SetDlgItemText(hwnd, ID_CHEMPOS3, "Q1 : ");
 				SetDlgItemText(hwnd, ID_CHEMPOS4, "C. O. P. : ");
+				SetDlgItemText(hwnd, U1, "J");
+				SetDlgItemText(hwnd, U2, "J");
+				SetDlgItemText(hwnd, U3, "J");
+				SetDlgItemText(hwnd, U4, "C");
+
 				iChemMode = 3;
 				break;
 			}
@@ -1252,7 +1272,7 @@ BOOL CALLBACK MyDlgProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM lParam)
 					default:
 						break;
 					}
-					fprintf_s(stream, "planate : %s \n Gravitation : %f \n Weight : %f \n Result : %f ", sstr,g,ww,r);
+					fprintf_s(stream, "\n...............\n Planate : %s \n Gravitation : %f \n Weight : %f \n Result : %f ", sstr,g,ww,r);
 				}
 				
 				fclose(stream);
@@ -1266,11 +1286,11 @@ BOOL CALLBACK MyDlgProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM lParam)
 				else
 				{
 					if(iChemMode == 1)
-						fprintf_s(stream, "Q1 : %f \n Q2 : %f \n Eff : %f \n Work Done : %f ",cv1,cv2,cv3,cv4);
+						fprintf_s(stream, "\n...............\n Q1 : %f \n Q2 : %f \n Eff : %f \n Work Done : %f ",cv1,cv2,cv3,cv4);
 					else if(iChemMode == 2)
-						fprintf_s(stream, "Q1 : %f \n W : %f \n Q2 : %f \n C.O.P. : %f ", cv1, cv2, cv3, cv4);
+						fprintf_s(stream, "\n...............\n Q1 : %f \n W : %f \n Q2 : %f \n C.O.P. : %f ", cv1, cv2, cv3, cv4);
 					else if(iChemMode == 3)
-						fprintf_s(stream, "Q2 : %f \n W : %f \n Q1 : %f \n C.O.P. : %f ", cv1, cv2, cv3, cv4);
+						fprintf_s(stream, "\n...............\n Q2 : %f \n W : %f \n Q1 : %f \n C.O.P. : %f ", cv1, cv2, cv3, cv4);
 				}
 				fclose(stream);
 			}
@@ -1283,13 +1303,13 @@ BOOL CALLBACK MyDlgProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM lParam)
 				else
 				{
 					if (iMathMode == 1)
-						fprintf_s(stream, "x1: %f \nx2: %f \nx3: %f \ny1: %f \ny2: %f \ny3: %f \nType: %s \n", mx1, mx2, mx3, mx4, mx5, mx6, str);
+						fprintf_s(stream, "\n...............\n x1: %f \n x2: %f \n x3: %f \n y1: %f \n y2: %f \n y3: %f \n Type: %s \n", mx1, mx2, mx3, mx4, mx5, mx6, str);
 					else if (iMathMode == 2)
-						fprintf_s(stream, "a: %f \nb: %f \nc: %f\n Type: %s ", mx7,mx8,mx9,str);
+						fprintf_s(stream, "\n...............\n a: %f \n b: %f \n c: %f \n Type: %s ", mx7,mx8,mx9,str);
 				}
 				fclose(stream);
 			}
-			EndDialog(hwnd, wParam);
+			//EndDialog(hwnd, wParam);
 			return TRUE;
 #pragma endregion
 

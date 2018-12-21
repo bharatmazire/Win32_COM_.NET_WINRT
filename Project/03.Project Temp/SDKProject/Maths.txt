@@ -1,4 +1,52 @@
 a: 30.000000 
 b: 60.000000 
 c: 90.000000
+ Type: right anngle a: 30.000000 
+b: 60.000000 
+c: 90.000000
+ Type: right anngle a: 30.000000 
+b: 60.000000 
+c: 90.000000
+ Type: right anngle a: 30.000000 
+b: 60.000000 
+c: 90.000000
+ Type: right anngle a: 30.000000 
+b: 60.000000 
+c: 90.000000
+ Type: right anngle a: 30.000000 
+b: 60.000000 
+c: 90.000000
+ Type: right anngle a: 30.000000 
+b: 60.000000 
+c: 90.000000
+ Type: right anngle a: 30.000000 
+b: 60.000000 
+c: 90.000000
+ Type: right anngle a: 30.000000 
+b: 60.000000 
+c: 90.000000
+ Type: right anngle a: 30.000000 
+b: 60.000000 
+c: 90.000000
+ Type: right anngle a: 30.000000 
+b: 60.000000 
+c: 90.000000
+ Type: right anngle a: 30.000000 
+b: 60.000000 
+c: 90.000000
+ Type: right anngle a: 30.000000 
+b: 60.000000 
+c: 90.000000
+ Type: right anngle a: 30.000000 
+b: 60.000000 
+c: 90.000000
+ Type: right anngle a: 30.000000 
+b: 60.000000 
+c: 90.000000
+ Type: right anngle a: 30.000000 
+b: 60.000000 
+c: 90.000000
+ Type: right anngle a: 30.000000 
+b: 60.000000 
+c: 90.000000
  Type: right anngle 
