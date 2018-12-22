@@ -1,0 +1,6 @@
+
+...............
+ Planate :  
+ Gravitation : 0.000000 
+ Weight : 0.000000 
+ Result : 0.000000 

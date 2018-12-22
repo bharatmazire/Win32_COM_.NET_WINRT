@@ -140,28 +140,31 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM lParam)
 
 		//if (siInitialMessage == 0)
 		//{
-			hFont = CreateFont(35, 0, 0, 0, FW_LIGHT, TRUE, FALSE, FALSE, DEFAULT_CHARSET, OUT_OUTLINE_PRECIS,
-				CLIP_DEFAULT_PRECIS, CLEARTYPE_QUALITY, FF_DECORATIVE, TEXT("Old English"));
+			hFont = CreateFont(30, 0, 0, 0, FW_LIGHT, FALSE, FALSE, FALSE, DEFAULT_CHARSET, OUT_OUTLINE_PRECIS,
+				CLIP_DEFAULT_PRECIS, CLEARTYPE_QUALITY, FF_MODERN, TEXT("Comic Sans MS"));
 
 			SelectObject(hdc, hFont);
 
 			SetBkMode(hdc, TRANSPARENT);
-			SetTextColor(hdc, RGB(192,192,192));
-			DrawText(hdc, TEXT("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nPRESS 'SPACEBAR' TO CONTINUE\n &\n'ESC' TO CLOSE"), -1, &rc, DT_CENTER);
-			
+			SetTextColor(hdc, RGB(0,0,0));
+			DrawText(hdc, TEXT("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n PRESS  :                       .     TO CONTINUE \n  :               \t \t.       TO CLOSE"), -1, &rc, DT_CENTER);
+			SetTextColor(hdc, RGB(255, 0, 0));
+			DrawText(hdc, TEXT("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n.        'SPACEBAR'             \n'ESC'    \t \t  "), -1, &rc, DT_CENTER);
+
 			
 			DeleteObject(hFont);
-			hFont = CreateFont(40, 0, 0, 0, FW_LIGHT, TRUE, FALSE, FALSE, DEFAULT_CHARSET, OUT_OUTLINE_PRECIS,
+
+			hFont = CreateFont(30, 0, 0, 0, FW_LIGHT, FALSE, FALSE, FALSE, DEFAULT_CHARSET, OUT_OUTLINE_PRECIS,
 				CLIP_DEFAULT_PRECIS, CLEARTYPE_QUALITY, FF_MODERN, TEXT("Courier New"));
 
 			SelectObject(hdc, hFont);
-			SetTextColor(hdc, RGB(255, 215, 0));
-			SetBkColor(hdc, RGB(211,211,211));
-			DrawText(hdc, TEXT("\n\n.  BATCH : Win32 SDK 2018 \n.  NAME : BHARAT S. MAZIRE"), -1, &rc, DT_LEFT);
+			SetTextColor(hdc, RGB(0, 255, 255));
+			//SetBkColor(hdc, RGB(211,211,211));
+			DrawText(hdc, TEXT("\n. BATCH : Win32 SDK 2018 \n. NAME  : BHARAT S. MAZIRE"), -1, &rc, DT_LEFT);
 		
-			SetTextColor(hdc, RGB(255, 215, 0));
-			SetBkColor(hdc, RGB(211, 211, 211));
-			DrawText(hdc, TEXT("\n\nWM_GESTURE  .\n ASTROMEDICOMP  ."), -1, &rc, DT_RIGHT);
+			SetTextColor(hdc, RGB(0, 255, 255));
+			//SetBkColor(hdc, RGB(211, 211, 211));
+			DrawText(hdc, TEXT("\nWM_GESTURE  .\n ASTROMEDICOMP  ."), -1, &rc, DT_RIGHT);
 		
 		
 		//}
@@ -220,7 +223,8 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM lParam)
 
 BOOL CALLBACK MyDlgProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM lParam)
 {
-	static int subject;
+	static HBRUSH hBrush;
+	static int subject = 0;
 	static CHAR str[20],str2[20],sstr[200],smass[20];
 	int err;
 	// physics
@@ -314,9 +318,32 @@ BOOL CALLBACK MyDlgProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM lParam)
 #pragma endregion
 
 
+	case WM_CTLCOLORDLG:
+	case WM_CTLCOLORBTN:
+	//case WM_CTLCOLOREDIT:
+	//case WM_CTLCOLORLISTBOX:
+	case WM_CTLCOLORSTATIC:
+	case WM_CTLCOLORMSGBOX:
+		//SetBkColor((HDC)wParam, RGB(255, 255, 255));
+		//SetBkMode((HDC)wParam, RGB(0, 0, 0));
+		//SetTextColor((HDC)wParam, RGB(64, 224, 208));
+		SetBkMode((HDC)wParam, RGB(255, 255, 255));
+		SetTextColor((HDC)wParam, RGB(0, 0, 128));
+		
+		hBrush = CreateSolidBrush(RGB(255, 255, 255));
+		return (INT_PTR)hBrush;
+
+		break;
 
 	case WM_COMMAND:
-		
+		switch (HIWORD(wParam))
+		{
+		case CTLCOLOR_DLG:
+			return TRUE;
+
+		case CTLCOLOR_EDIT:
+			return TRUE;
+		}
 		switch (LOWORD(wParam))
 		{
 #pragma region PHYSICS
@@ -334,6 +361,7 @@ BOOL CALLBACK MyDlgProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM lParam)
 				EnableWindow(GetDlgItem(hwnd, ID_ETGRAVITY), TRUE);
 				EnableWindow(GetDlgItem(hwnd, IDCOMPUTE_PHY), TRUE);
 				EnableWindow(GetDlgItem(hwnd, ID_ETWEIGHT), TRUE);
+				//EnableWindow(GetDlgItem(hwnd, ID_ETMASS), TRUE);
 				
 				// radio button enable start
 				EnableWindow(GetDlgItem(hwnd, ID_RBSUN), TRUE);
@@ -806,8 +834,8 @@ BOOL CALLBACK MyDlgProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM lParam)
 				EnableWindow(GetDlgItem(hwnd, ID_CHEMPOS4), TRUE);
 				EnableWindow(GetDlgItem(hwnd, ID_CHEMET1), TRUE);
 				EnableWindow(GetDlgItem(hwnd, ID_CHEMET2), TRUE);
-				EnableWindow(GetDlgItem(hwnd, ID_CHEMET3), TRUE);
-				EnableWindow(GetDlgItem(hwnd, ID_CHEMET4), TRUE);
+				EnableWindow(GetDlgItem(hwnd, ID_CHEMET3), FALSE);
+				EnableWindow(GetDlgItem(hwnd, ID_CHEMET4), FALSE);
 				EnableWindow(GetDlgItem(hwnd, ID_CHEMCOMPUTE), TRUE);
 
 
@@ -1229,9 +1257,15 @@ BOOL CALLBACK MyDlgProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM lParam)
 			break;
 #pragma endregion
 
+
+
 #pragma region SAVE_KEY
 		case IDOK:
-			if (subject == -1)
+			if (subject == 0)
+			{
+				MessageBox(hwnd,TEXT("DATA NOT PRESENT !!!"),TEXT("ERROR"),MB_OK | MB_ICONERROR);
+			}
+			else if (subject == -1)
 			{
 				MessageBox(hwnd, TEXT("Data Already Present !!"), TEXT("STOP"), MB_OK);
 				//EndDialog(hwnd, wParam);
@@ -1390,6 +1424,7 @@ void ResetPhysics(HWND hwnd)
 void ResetChemistry(HWND hwnd)
 {
 	ClearChemistry(hwnd);
+	EnableWindow(GetDlgItem(hwnd, ID_CHEMCOMPUTE), FALSE);
 	EnableWindow(GetDlgItem(hwnd, ID_ETCHEM), FALSE);
 	EnableWindow(GetDlgItem(hwnd,ID_CHEMBTHEAT), FALSE);
 	EnableWindow(GetDlgItem(hwnd,ID_CHEMBTNREF), FALSE);

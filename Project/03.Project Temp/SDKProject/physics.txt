@@ -5,3 +5,8 @@ planate : SUN
  Gravitation : 8.870000 
  Weight : 16.000000 
  Result : 14.484589 
+...............
+ Planate : SATURN 
+ Gravitation : 10.440000 
+ Weight : 12.000000 
+ Result : 12.786283 
